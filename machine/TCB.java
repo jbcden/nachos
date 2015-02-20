@@ -157,8 +157,9 @@ public final class TCB {
 
 	TCB previous = currentTCB;
 	previous.running = false;
-	
+
 	this.interrupt();
+  System.out.println(running);
 	previous.yield();
     }
     
@@ -269,7 +270,9 @@ public final class TCB {
      * this TCB and return.
      */
     private void yield() {
+      System.out.println(running);
 	waitForInterrupt();
+  System.out.println("AFTER WAITING");
 	
 	if (done) {
 	    currentTCB.interrupt();
@@ -288,6 +291,7 @@ public final class TCB {
      * is updated by <tt>contextSwitch()</tt> before we get called.
      */
     private synchronized void waitForInterrupt() {
+      System.out.println(running);
 	while (!running) {
 	    try { wait(); }
 	    catch (InterruptedException e) { }

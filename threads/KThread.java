@@ -240,13 +240,16 @@ public class KThread {
      */
     public static void sleep() {
 	Lib.debug(dbgThread, "Sleeping thread: " + currentThread.toString());
+	System.out.println(currentThread.toString());
 	
 	Lib.assertTrue(Machine.interrupt().disabled());
 
 	if (currentThread.status != statusFinished)
 	    currentThread.status = statusBlocked;
 
+  System.out.println("HERE I AM");
 	runNextThread();
+  System.out.println("AFTER RUN NEXT");
     }
 
     /**
@@ -276,7 +279,14 @@ public class KThread {
 	Lib.debug(dbgThread, "Joining to thread: " + toString());
 
 	Lib.assertTrue(this != currentThread);
-
+  boolean status = Machine.interrupt().disable();
+  System.out.println("Before ready");
+  this.ready();
+  System.out.println("After ready");
+  currentThread.sleep();
+  System.out.println("PAPPLES");
+  currentThread.ready();
+  Machine.interrupt().restore(status);
     }
 
     /**
@@ -306,11 +316,16 @@ public class KThread {
      * using <tt>run()</tt>.
      */
     private static void runNextThread() {
+      System.out.println("BEGIN NEXT");
 	KThread nextThread = readyQueue.nextThread();
+      System.out.println(nextThread.toString());
+      System.out.println("After Get NEXT");
 	if (nextThread == null)
 	    nextThread = idleThread;
 
+      System.out.println("BEFORE RUN");
 	nextThread.run();
+      System.out.println("AFTER RUN");
     }
 
     /**
@@ -345,7 +360,9 @@ public class KThread {
 
 	currentThread = this;
 
+  System.out.println("BEFORE CONTEXT");
 	tcb.contextSwitch();
+  System.out.println("After CONTEXT");
 
 	currentThread.restoreState();
     }
@@ -404,7 +421,8 @@ public class KThread {
 	Lib.debug(dbgThread, "Enter KThread.selfTest");
 	
 	new KThread(new PingTest(1)).setName("forked thread").fork();
-	new KThread(new PingTest(2)).setName("forked thread 2").fork();
+	new KThread(new PingTest(2)).setName("joined thread").join();
+	new KThread(new PingTest(3)).setName("forked thread").fork();
 	new PingTest(0).run();
     }
 
