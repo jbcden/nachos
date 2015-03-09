@@ -14,7 +14,7 @@ public class SynchList {
   public SynchList() {
     list = new LinkedList<Object>();
     lock = new Lock();
-    listEmpty = new Condition(lock);
+    listEmpty = new Condition2(lock);
   }
 
   /**
@@ -72,8 +72,6 @@ public class SynchList {
     SynchList ping = new SynchList();
     SynchList pong = new SynchList();
 
-    System.out.println("HERE I AM");
-
     new KThread(new PingTest(ping, pong)).setName("ping").fork();
 
     for (int i=0; i<10; i++) {
@@ -81,7 +79,6 @@ public class SynchList {
       ping.add(o);
       Lib.assertTrue(pong.removeFirst() == o);
     }
-    System.out.println("DONE");
   }
 
   private LinkedList<Object> list;

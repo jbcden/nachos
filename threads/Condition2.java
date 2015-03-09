@@ -87,9 +87,6 @@ public class Condition2 { // Operations: sleep(), wake(), and wakeAll()
     Machine.interrupt().restore(intStatus);
   }
 
-
-
-
   /**
    * Wake up all threads sleeping on this condition variable. The current
    * thread must hold the associated lock.
@@ -105,6 +102,4 @@ public class Condition2 { // Operations: sleep(), wake(), and wakeAll()
 
     Machine.interrupt().restore(intStatus);
   }
-
-
 }
