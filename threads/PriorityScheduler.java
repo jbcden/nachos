@@ -2,8 +2,10 @@ package nachos.threads;
 
 import nachos.machine.*;
 
-import java.util.TreeSet;
-import java.util.HashSet;
+import java.util.TreeSet; // These might be made redundant
+import java.util.HashSet; // by java.util.PriorityQueue
+//import java.util.PriorityQueue;
+import java.util.Comparator;
 import java.util.Iterator;
 
 /**
@@ -122,10 +124,39 @@ public class PriorityScheduler extends Scheduler {
 	return (ThreadState) thread.schedulingState;
     }
 
+    protected class ThreadComparator implements Comparator<ThreadState> { // see ThreadState class at line ~200
+
+	ThreadComparator() {
+
+	}
+
+	// We want to be able to dequeue the thread with the greatest priority;
+	// if waitQueue.poll() dequeues the thread with the *smallest* priority,
+	// swap the outputs of the comparator
+	public int compare(ThreadState s1, ThreadState s2) {
+		if (s1.getPriority() < s2.getPriority()) {
+			return -1;
+		} else if (s1.getPriority() > s2.getPriority()) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+    }
+
+
     /**
      * A <tt>ThreadQueue</tt> that sorts threads by priority.
      */
+
+    /* Hopefully, this won't become too confusing with java.util.PriorityQueue
+    also being a thing */
     protected class PriorityQueue extends ThreadQueue {
+
+	// We're forced to refer to it as "java.util.PriorityQueue" to make it compile
+	// 11 is the default initial capacity for a java.util.PriorityQueue
+	private java.util.PriorityQueue<ThreadState> waitQueue = new java.util.PriorityQueue<ThreadState>(11, new ThreadComparator()); 
+
 	PriorityQueue(boolean transferPriority) {
 	    this.transferPriority = transferPriority;
 	}
@@ -143,7 +174,16 @@ public class PriorityScheduler extends Scheduler {
 	public KThread nextThread() {
 	    Lib.assertTrue(Machine.interrupt().disabled());
 	    // implement me
-	    return null;
+	/* Lame attempt at an implementation - J. G-D. 3/16/15 */
+
+	    ThreadState state = waitQueue.poll(); 
+	    // poll() returns null for an empty queue
+	    if (state == null) {
+		return null;
+	    }
+
+	    // state should have the highest-priority thread
+	    return state.thread;
 	}
 
 	/**
