@@ -124,6 +124,36 @@ public class PriorityScheduler extends Scheduler {
 	return (ThreadState) thread.schedulingState;
     }
 
+  private static class PriorityTest implements Runnable {
+    PriorityTest(PriorityQueue q) {
+      this.q = q;
+    }
+
+    public void run() {
+      Machine.interrupt().disable();
+      System.out.println("APPLES");
+      q.print();
+    }
+
+    private PriorityQueue q;
+  }
+
+
+  public static void selfTest() {
+    boolean intStatus = Machine.interrupt().disable();
+    PriorityQueue waitQueue = (PriorityQueue) new PriorityScheduler().newThreadQueue(false);
+    KThread x = new KThread(new PriorityTest(waitQueue)).setName("x");
+
+    waitQueue.waitForAccess(x);
+    x.fork();
+    ThreadedKernel.scheduler.setPriority(x, 5);
+    KThread.currentThread().yield();
+    System.out.println("PANDAS");
+
+    Machine.interrupt().restore(intStatus);
+  }
+
+
     protected class ThreadComparator implements Comparator<ThreadState> { // see ThreadState class at line ~200
 
 	ThreadComparator() {
@@ -139,7 +169,13 @@ public class PriorityScheduler extends Scheduler {
 		} else if (s1.getPriority() > s2.getPriority()) {
 			return 1;
 		} else {
-			return 0;
+			if (s1.getWaitTime() < s2.getWaitTime()) {
+				return -1;
+			} else if (s1.getWaitTime() > s2.getWaitTime()) {
+				return 1;
+			} else {
+				return 0; // This isn't likely to happen
+			}
 		}
 	}
     }
@@ -195,12 +231,16 @@ public class PriorityScheduler extends Scheduler {
 	 */
 	protected ThreadState pickNextThread() {
 	    // implement me
-	    return null;
+    return waitQueue.peek();
 	}
 	
 	public void print() {
 	    Lib.assertTrue(Machine.interrupt().disabled());
+      System.out.print("wait queue size: " + waitQueue.size());
 	    // implement me (if you want)
+      for(Iterator i=waitQueue.iterator(); i.hasNext(); ) {
+        System.out.print((ThreadState) i.next() + " ");
+      }
 	}
 
 	/**
@@ -226,8 +266,12 @@ public class PriorityScheduler extends Scheduler {
 	 */
 	public ThreadState(KThread thread) {
 	    this.thread = thread;
-	    
+	    this.waitTime = 0;
 	    setPriority(priorityDefault);
+	}
+
+	public long getWaitTime() {
+		return waitTime;
 	}
 
 	/**
@@ -277,6 +321,8 @@ public class PriorityScheduler extends Scheduler {
 	 */
 	public void waitForAccess(PriorityQueue waitQueue) {
 	    // implement me
+	    this.waitTime = Machine.timer().getTime(); // store the time we started waiting
+      waitQueue.waitQueue.add(this);
 	}
 
 	/**
@@ -293,9 +339,17 @@ public class PriorityScheduler extends Scheduler {
 	    // implement me
 	}	
 
+  public String toString() {
+    return "(" + this.thread.toString() + ", Priority: " + this.priority + ", Wait Time: " + this.waitTime + ")";
+
+  }
+
 	/** The thread with which this object is associated. */	   
 	protected KThread thread;
 	/** The priority of the associated thread. */
 	protected int priority;
+	/** The time this thread started waiting; suggested on Piazza */
+	protected long waitTime;
+
     }
 }
