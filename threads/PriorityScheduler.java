@@ -125,14 +125,12 @@ public class PriorityScheduler extends Scheduler {
     }
 
   private static class PriorityTest implements Runnable {
-    PriorityTest(PriorityQueue q) {
-      this.q = q;
+    PriorityTest() {
     }
 
     public void run() {
       Machine.interrupt().disable();
       System.out.println("APPLES");
-      q.print();
     }
 
     private PriorityQueue q;
@@ -141,10 +139,10 @@ public class PriorityScheduler extends Scheduler {
 
   public static void selfTest() {
     boolean intStatus = Machine.interrupt().disable();
-    PriorityQueue waitQueue = (PriorityQueue) new PriorityScheduler().newThreadQueue(false);
-    KThread x = new KThread(new PriorityTest(waitQueue)).setName("x");
+    //PriorityQueue waitQueue = (PriorityQueue) ThreadedKernel.scheduler.newThreadQueue(false);
+    KThread x = new KThread(new PriorityTest()).setName("x");
 
-    waitQueue.waitForAccess(x);
+    //waitQueue.waitForAccess(x);
     x.fork();
     ThreadedKernel.scheduler.setPriority(x, 5);
     KThread.currentThread().yield();
@@ -200,6 +198,7 @@ public class PriorityScheduler extends Scheduler {
 	public void waitForAccess(KThread thread) {
 	    Lib.assertTrue(Machine.interrupt().disabled());
 	    getThreadState(thread).waitForAccess(this);
+      this.print();
 	}
 
 	public void acquire(KThread thread) {
@@ -241,6 +240,7 @@ public class PriorityScheduler extends Scheduler {
       for(Iterator i=waitQueue.iterator(); i.hasNext(); ) {
         System.out.print((ThreadState) i.next() + " ");
       }
+      System.out.println("");
 	}
 
 	/**
