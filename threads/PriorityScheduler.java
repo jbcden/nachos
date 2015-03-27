@@ -2,6 +2,7 @@ package nachos.threads;
 import nachos.machine.*;
 import java.util.TreeSet; // These might be made redundant
 import java.util.HashSet; // by java.util.PriorityQueue
+import java.util.Stack;
 //import java.util.PriorityQueue;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -140,6 +141,32 @@ public class PriorityScheduler extends Scheduler {
   public static void selfTest() {
     boolean intStatus = Machine.interrupt().disable();
 
+    // create thread A with priority 2
+    // have thread A acquire lock l
+    // thread A creates thread B with priority 7,
+    // and thread C with priority 5
+    // Thread B tries to acquire lock l
+    //
+    // Thread A should run rather than thread C
+    // Make the threads print stuff so we see what order
+    // they run in
+    //
+    // Kthread a = new KThread(new FooTest(3, "aaa").setName("a");
+    // ThreadedKernel.scheduler.setPriority(a, 2);
+    // a.fork();
+    //
+    // Lock l = new Lock();
+    // a.acquire(l);
+    //
+    // KThread b = new KThread(new FooTest(3, "bbb").setName("b");
+    // KThread c = new KThread(new FooTest(3, "ccc").setName("c");
+    // ThreadedKernel.scheduler.setPriority(b, 7);
+    // ThreadedKernel.scheduler.setPriority(c, 5);
+    // b.fork();
+    // c.fork();
+    //
+    // Scheduler.currentThread().yield();
+    //
     KThread a = new KThread(new FooTest(3, "aaa")).setName("a");
     KThread b = new KThread(new FooTest(5, "bbb")).setName("b");
     KThread c = new KThread(new FooTest(8, "ccc")).setName("c");
@@ -218,6 +245,11 @@ public class PriorityScheduler extends Scheduler {
       Lib.assertTrue(Machine.interrupt().disabled());
       // implement me
       /* Lame attempt at an implementation - J. G-D. 3/16/15 */
+      ThreadState previous = getThreadState(KThread.currentThread());
+      while(!previous.pStack.empty()) {
+        previous.pStack.pop();
+      }
+
       ThreadState state = waitQueue.poll();
       this.print();
       // poll() returns null for an empty queue
@@ -293,7 +325,8 @@ public class PriorityScheduler extends Scheduler {
      * @return	the priority of the associated thread.
      */
     public int getPriority() {
-      return priority;
+      return getEffectivePriority();
+      // return priority;
     }
     /**
      * Return the effective priority of the associated thread.
@@ -301,8 +334,23 @@ public class PriorityScheduler extends Scheduler {
      * @return	the effective priority of the associated thread.
      */
     public int getEffectivePriority() {
+      if(pStack.empty()) {
+        ThreadState current = ThreadState.currentLockHolder;
+        return current.priority;
+      } else {
+        return pStack.peek();
+      }
       // implement me
-      return priority;
+      // Maintain a stack of priorities (integers)
+      // When priority gets donated to this thread,
+      // push a new value onto the stack
+      //
+      // When we're done running the thread at the
+      // effective priority, pop the value from the stack
+      //
+      // Otherwise, just return the top of the stack (?)
+      // 
+      //return priority;
     }
     /**
      * Set the priority of the associated thread to the specified value.
@@ -310,9 +358,10 @@ public class PriorityScheduler extends Scheduler {
      * @param	priority the new priority.
      */
     public void setPriority(int priority) {
-      if (this.priority == priority)
+      if (this.priority == priority) {
         return;
-      this.priority = priority;
+      }
+      pStack.push(priority);
       // implement me
     }
     /**
@@ -330,6 +379,10 @@ public class PriorityScheduler extends Scheduler {
     public void waitForAccess(PriorityQueue waitQueue) {
       // implement me
       this.waitTime = Machine.timer().getTime(); // store the time we started waiting
+      ThreadState current = ThreadState.currentLockHolder;
+      if(current.priority < this.priority) {
+        current.setPriority(this.priority);
+      }
       waitQueue.waitQueue.add(this);
     }
     /**
@@ -344,15 +397,20 @@ public class PriorityScheduler extends Scheduler {
      */
     public void acquire(PriorityQueue waitQueue) {
       // implement me
+      ThreadState.currentLockHolder = this;
     }
     public String toString() {
       return "(" + this.thread.toString() + ", Priority: " + this.priority + ", Wait Time: " + this.waitTime + ")";
     }
+
     /** The thread with which this object is associated. */	
     protected KThread thread;
     /** The priority of the associated thread. */
     protected int priority;
     /** The time this thread started waiting; suggested on Piazza */
     protected long waitTime;
+    // pStack
+    public Stack<Integer> pStack;
+    public static ThreadState currentLockHolder;
   }
 }
