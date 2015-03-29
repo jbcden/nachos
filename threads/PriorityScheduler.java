@@ -335,7 +335,7 @@ public class PriorityScheduler extends Scheduler {
      */
     public int getEffectivePriority() {
       if(pStack.empty()) {
-        ThreadState current = ThreadState.currentLockHolder;
+        ThreadState current = PriorityScheduler.currentLockHolder;
         return current.priority;
       } else {
         return pStack.peek();
@@ -379,7 +379,7 @@ public class PriorityScheduler extends Scheduler {
     public void waitForAccess(PriorityQueue waitQueue) {
       // implement me
       this.waitTime = Machine.timer().getTime(); // store the time we started waiting
-      ThreadState current = ThreadState.currentLockHolder;
+      ThreadState current = PriorityScheduler.currentLockHolder;
       if(current.priority < this.priority) {
         current.setPriority(this.priority);
       }
@@ -397,7 +397,7 @@ public class PriorityScheduler extends Scheduler {
      */
     public void acquire(PriorityQueue waitQueue) {
       // implement me
-      ThreadState.currentLockHolder = this;
+      PriorityScheduler.currentLockHolder = this;
     }
     public String toString() {
       return "(" + this.thread.toString() + ", Priority: " + this.priority + ", Wait Time: " + this.waitTime + ")";
@@ -411,6 +411,6 @@ public class PriorityScheduler extends Scheduler {
     protected long waitTime;
     // pStack
     public Stack<Integer> pStack;
-    public static ThreadState currentLockHolder;
   }
+    public static ThreadState currentLockHolder;
 }
