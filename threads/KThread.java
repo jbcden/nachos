@@ -282,6 +282,9 @@ public class KThread {
    */
   public void join() {
     Lib.debug(dbgThread, "Joining to thread: " + toString());
+    if(this.status == statusFinished) {
+      return;
+    }
 
     Lib.assertTrue(this != currentThread);
     boolean status = Machine.interrupt().disable();

@@ -110,16 +110,7 @@ public class PriorityScheduler extends Scheduler {
     return (ThreadState) thread.schedulingState;
   }
 
-  private static class PriorityTest implements Runnable {
-    PriorityTest() {
-    }
-    public void run() {
-      Machine.interrupt().disable();
-      System.out.println("APPLES");
-    }
-    private PriorityQueue q;
-  }
-
+  
   // Takes in an int n and a string and prints the string n times.
   private static class FooTest implements Runnable {
     FooTest(int n, String s) {
@@ -137,6 +128,63 @@ public class PriorityScheduler extends Scheduler {
     private String s;
   }
 
+
+  private static class ThreadATest implements Runnable {
+    private Lock testLock;
+    ThreadATest(Lock testLock) {
+      this.testLock = testLock;
+    }
+
+    public void run() {
+      boolean intStatus = Machine.interrupt().disable();
+      KThread threadB = new KThread(new ThreadBTest(testLock)).setName("b");
+      KThread threadC = new KThread(new ThreadCTest()).setName("c");
+
+      ThreadedKernel.scheduler.setPriority(threadB, 7);
+      ThreadedKernel.scheduler.setPriority(threadC, 5);
+
+      testLock.acquire();
+
+      threadB.fork();
+      threadC.fork();
+      //threadB.join();
+
+      for(int i=0; i<150; i++) {
+        System.out.println("I AM A!!");
+      }
+      Machine.interrupt().restore(intStatus);
+      testLock.release();
+    }
+  }
+
+
+  private static class ThreadBTest implements Runnable {
+    private Lock testLock;
+    ThreadBTest(Lock testLock) {
+      this.testLock = testLock;
+    }
+
+    public void run() {
+      testLock.acquire();
+      for(int i=0; i<150; i++) {
+        System.out.println("I AM B!!");
+      }
+      testLock.release();
+    }
+  }
+
+
+  private static class ThreadCTest implements Runnable {
+    ThreadCTest() {
+    }
+
+    public void run() {
+      for(int i=0; i<150; i++) {
+        System.out.println("I AM C!!");
+      }
+
+    }
+  }
 
   public static void selfTest() {
     boolean intStatus = Machine.interrupt().disable();
@@ -167,13 +215,20 @@ public class PriorityScheduler extends Scheduler {
     //
     // Scheduler.currentThread().yield();
     //
-    KThread a = new KThread(new FooTest(3, "aaa")).setName("a");
-    KThread b = new KThread(new FooTest(5, "bbb")).setName("b");
-    KThread c = new KThread(new FooTest(8, "ccc")).setName("c");
+    Lock testLock = new Lock();
 
-    ThreadedKernel.scheduler.setPriority(a, 7);
-    ThreadedKernel.scheduler.setPriority(b, 2);
-    ThreadedKernel.scheduler.setPriority(c, 4);
+    KThread threadA = new KThread(new ThreadATest(testLock)).setName("a");
+    ThreadedKernel.scheduler.setPriority(threadA, 2);
+    threadA.fork();
+    KThread.currentThread().yield();
+
+    //KThread a = new KThread(new FooTest(3, "aaa")).setName("a");
+    //KThread b = new KThread(new FooTest(5, "bbb")).setName("b");
+    //KThread c = new KThread(new FooTest(8, "ccc")).setName("c");
+
+    //ThreadedKernel.scheduler.setPriority(a, 7);
+    //ThreadedKernel.scheduler.setPriority(b, 2);
+    //ThreadedKernel.scheduler.setPriority(c, 4);
 
     // c should have the highest priority
 
@@ -181,12 +236,12 @@ public class PriorityScheduler extends Scheduler {
     // However, none are running right now
     // At least they are being added to the ready queue!
 
-    a.fork();
-    b.fork();
-    c.fork();
+    //a.fork();
+    //b.fork();
+    //c.fork();
 
-    KThread.currentThread().yield();
-    KThread.currentThread().yield();
+    //KThread.currentThread().yield();
+    //KThread.currentThread().yield();
 
     //PriorityQueue waitQueue = (PriorityQueue) ThreadedKernel.scheduler.newThreadQueue(false);
     //KThread x = new KThread(new PriorityTest()).setName("x");
@@ -244,7 +299,6 @@ public class PriorityScheduler extends Scheduler {
     public KThread nextThread() {
       Lib.assertTrue(Machine.interrupt().disabled());
       // implement me
-      /* Lame attempt at an implementation - J. G-D. 3/16/15 */
       ThreadState previous = getThreadState(KThread.currentThread());
       while(!previous.pStack.empty()) {
         previous.pStack.pop();
@@ -361,7 +415,9 @@ public class PriorityScheduler extends Scheduler {
       if (this.priority == priority) {
         return;
       }
+      System.out.println(priority);
       pStack.push(priority);
+      System.out.println("END");
       // implement me
     }
     /**
@@ -410,7 +466,7 @@ public class PriorityScheduler extends Scheduler {
     /** The time this thread started waiting; suggested on Piazza */
     protected long waitTime;
     // pStack
-    public Stack<Integer> pStack;
+    public Stack<Integer> pStack = new Stack<Integer>();
   }
     public static ThreadState currentLockHolder;
 }
