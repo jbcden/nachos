@@ -140,14 +140,15 @@ public class PriorityScheduler extends Scheduler {
       KThread threadB = new KThread(new ThreadBTest(testLock)).setName("b");
       KThread threadC = new KThread(new ThreadCTest()).setName("c");
 
-      ThreadedKernel.scheduler.setPriority(threadB, 7);
+      //ThreadedKernel.scheduler.setPriority(threadB, 7);
+      ThreadedKernel.scheduler.setPriority(threadB, 6); // this is for the join test case
       ThreadedKernel.scheduler.setPriority(threadC, 5);
 
       testLock.acquire();
 
       threadB.fork();
       threadC.fork();
-      //threadB.join();
+      threadB.join();
 
       for(int i=0; i<150; i++) {
         System.out.println("I AM A!!");
@@ -165,11 +166,14 @@ public class PriorityScheduler extends Scheduler {
     }
 
     public void run() {
-      testLock.acquire();
+      //testLock.acquire();
+      KThread b = KThread.currentThread();
+      ThreadState bState = (ThreadState) b.schedulingState;
+
       for(int i=0; i<150; i++) {
         System.out.println("I AM B!!");
       }
-      testLock.release();
+      //testLock.release();
     }
   }
 
@@ -198,58 +202,17 @@ public class PriorityScheduler extends Scheduler {
     // Thread A should run rather than thread C
     // Make the threads print stuff so we see what order
     // they run in
-    //
-    // Kthread a = new KThread(new FooTest(3, "aaa").setName("a");
-    // ThreadedKernel.scheduler.setPriority(a, 2);
-    // a.fork();
-    //
-    // Lock l = new Lock();
-    // a.acquire(l);
-    //
-    // KThread b = new KThread(new FooTest(3, "bbb").setName("b");
-    // KThread c = new KThread(new FooTest(3, "ccc").setName("c");
-    // ThreadedKernel.scheduler.setPriority(b, 7);
-    // ThreadedKernel.scheduler.setPriority(c, 5);
-    // b.fork();
-    // c.fork();
-    //
-    // Scheduler.currentThread().yield();
-    //
+
     Lock testLock = new Lock();
 
     KThread threadA = new KThread(new ThreadATest(testLock)).setName("a");
-    ThreadedKernel.scheduler.setPriority(threadA, 2);
+    //ThreadedKernel.scheduler.setPriority(threadA, 2); // this is for the lock test case
+    ThreadedKernel.scheduler.setPriority(threadA, 7); // this is used for the join test case
     threadA.fork();
+
+    KThread.currentThread().yield();
     KThread.currentThread().yield();
 
-    //KThread a = new KThread(new FooTest(3, "aaa")).setName("a");
-    //KThread b = new KThread(new FooTest(5, "bbb")).setName("b");
-    //KThread c = new KThread(new FooTest(8, "ccc")).setName("c");
-
-    //ThreadedKernel.scheduler.setPriority(a, 7);
-    //ThreadedKernel.scheduler.setPriority(b, 2);
-    //ThreadedKernel.scheduler.setPriority(c, 4);
-
-    // c should have the highest priority
-
-    // c should run first, then b, then a
-    // However, none are running right now
-    // At least they are being added to the ready queue!
-
-    //a.fork();
-    //b.fork();
-    //c.fork();
-
-    //KThread.currentThread().yield();
-    //KThread.currentThread().yield();
-
-    //PriorityQueue waitQueue = (PriorityQueue) ThreadedKernel.scheduler.newThreadQueue(false);
-    //KThread x = new KThread(new PriorityTest()).setName("x");
-    //waitQueue.waitForAccess(x);
-    //x.fork();
-    //ThreadedKernel.scheduler.setPriority(x, 5);
-    //KThread.currentThread().yield();
-    //System.out.println("PANDAS");
     Machine.interrupt().restore(intStatus);
   }
 
@@ -265,9 +228,10 @@ public class PriorityScheduler extends Scheduler {
       } else if (s1.getPriority() < s2.getPriority()) {
         return 1;
       } else {
-        if (s1.getWaitTime() > s2.getWaitTime()) {
+        long currentTime = Machine.timer().getTime();
+        if (currentTime - s1.getWaitTime() > currentTime - s2.getWaitTime()) {
           return -1;
-        } else if (s1.getWaitTime() < s2.getWaitTime()) {
+        } else if (currentTime - s1.getWaitTime() < currentTime - s2.getWaitTime()) {
           return 1;
         } else {
           return 0; // This isn't likely to happen
@@ -303,6 +267,7 @@ public class PriorityScheduler extends Scheduler {
       while(!previous.pStack.empty()) {
         previous.pStack.pop();
       }
+      previous.pStack.push(previous.priority);
 
       ThreadState state = waitQueue.poll();
       this.print();
@@ -327,7 +292,6 @@ public class PriorityScheduler extends Scheduler {
     public void print() {
       Lib.assertTrue(Machine.interrupt().disabled());
       System.out.print("wait queue size: " + waitQueue.size());
-      //System.out.println(waitQueue.toString());
 
       java.util.PriorityQueue waitQueueCopy = new java.util.PriorityQueue<ThreadState>(11, waitQueue.comparator());
       Iterator iter = waitQueue.iterator();
@@ -340,10 +304,6 @@ public class PriorityScheduler extends Scheduler {
       System.out.println();
       
       // implement me (if you want)
-      //for(Iterator i=waitQueue.iterator(); i.hasNext(); ) {
-      //	System.out.print((ThreadState) i.next() + " ");
-      //}
-      //System.out.println("");
     }
     /**
      * <tt>true</tt> if this queue should transfer priority from waiting
@@ -415,11 +375,19 @@ public class PriorityScheduler extends Scheduler {
       if (this.priority == priority) {
         return;
       }
-      System.out.println(priority);
-      pStack.push(priority);
-      System.out.println("END");
+     this.priority = priority;
+     pStack.push(priority); // Do we want this? Apparently yes
       // implement me
     }
+
+    public void setEffectivePriority(int priority) {
+      if (this.priority == priority) {
+        return;
+      }
+      pStack.push(priority);
+      // implement me
+    }
+
     /**
      * Called when <tt>waitForAccess(thread)</tt> (where <tt>thread</tt> is
      * the associated thread) is invoked on the specified priority queue.
@@ -437,7 +405,7 @@ public class PriorityScheduler extends Scheduler {
       this.waitTime = Machine.timer().getTime(); // store the time we started waiting
       ThreadState current = PriorityScheduler.currentLockHolder;
       if(current.priority < this.priority) {
-        current.setPriority(this.priority);
+        current.setEffectivePriority(this.priority);
       }
       waitQueue.waitQueue.add(this);
     }
@@ -456,7 +424,7 @@ public class PriorityScheduler extends Scheduler {
       PriorityScheduler.currentLockHolder = this;
     }
     public String toString() {
-      return "(" + this.thread.toString() + ", Priority: " + this.priority + ", Wait Time: " + this.waitTime + ")";
+      return "(" + this.thread.toString() + ", Priority: " + this.priority + ", Effective Priority: " + getEffectivePriority() + ", Wait Time: " + this.waitTime + ")";
     }
 
     /** The thread with which this object is associated. */	
