@@ -30,15 +30,40 @@ public class Boat
     // Create threads here. See section 3.4 of the Nachos for Java
     // Walkthrough linked from the projects page.
 
-    Runnable r = new Runnable() {
+    /* Runnable r = new Runnable() { */
+    /*   public void run() { */
+    /*     SampleItinerary(); */
+    /*   } */
+    /* }; */
+    /* KThread t = new KThread(r); */
+    /* t.setName("Sample Boat Thread"); */
+    /* t.fork(); */
+
+    Runnable a = new Runnable() {
       public void run() {
-        SampleItinerary();
+        AdultItinerary();
       }
     };
-    KThread t = new KThread(r);
-    t.setName("Sample Boat Thread");
-    t.fork();
 
+    for (int i = 0; i < adults; i++) {
+      KThread t = new KThread(a);
+      t.setName("adult thread " + i);
+      t.fork();
+    }
+
+    Runnable c = new Runnable() {
+      public void run() {
+        ChildItinerary();
+      }
+    };
+
+    for (int i = 0; i < children; i++) {
+      KThread t = new KThread(c);
+      t.setName("child thread " + i);
+      t.fork();
+    }
+
+    KThread.currentThread().yield();
   }
 
   static void AdultItinerary()
