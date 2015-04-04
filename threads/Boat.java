@@ -16,7 +16,7 @@ public class Boat
   static int molokaiChildren = 0;
   static int molokaiAdults = 0;
 
-  static ArrayList boatPeople = new ArrayList<Person>();
+  static ArrayList<Person> boatPeople = new ArrayList<Person>();
 
   static enum Island {
     OAHU, MOLOKAI
@@ -26,7 +26,7 @@ public class Boat
     CHILD, ADULT
   }
 
-  static int getNumberOfChildren(Island current) {
+  static int getNumberOfChildrenOnCurrentIsland(Island current) {
     if(current == Island.MOLOKAI) {
       return molokaiChildren;
     } else {
@@ -34,7 +34,7 @@ public class Boat
     }
   }
 
-  static int getNumberOfAdults(Island current) {
+  static int getNumberOfAdultsOnCurrentIsland(Island current) {
     if(current == Island.MOLOKAI) {
       return molokaiAdults;
     } else {
@@ -42,8 +42,12 @@ public class Boat
     }
   }
 
-  static int getTotalNumberOfPeople(Island current) {
+  static int getTotalNumberOfPeopleOnCurrentIsland(Island current) {
     return getNumberOfChildren(current) + getNumberOfAdults(current);
+  }
+
+  static boolean isBoatHere(Island current) {
+    return boatLocation == current;
   }
 
   public static void selfTest()
@@ -130,21 +134,13 @@ indicates that an adult has rowed the boat across to Molokai
     bg.ChildRideToMolokai();
   }
 
+  // Tells if we can add another person to the boat
   private static boolean isBoatValid(Person p) {
-    if( p == Person.ADULT && boatPeople.isEmpty() ) {
-      return true;
+    if( p == Person.CHILD) {
+      return (!boatPeople.contains(Person.ADULT) && boatPeople.size() < 2);
+    } else {
+      return boatPeople.size() == 0;
     }
-
-    if( p == Person.CHILD ) {
-      if (boatPeople.isEmpty()) {
-        return true;
-      } else if( boatPeople.contains(Person.ADULT) || boatPeople.size() == 2 ) {
-        return false;
-      } else {
-        return true;
-      }
-    }
-    return false;
   }
 
   private static void AdultRowToMolokai() {
@@ -163,7 +159,6 @@ indicates that an adult has rowed the boat across to Molokai
     bg.ChildRowToMolokai();
   }
 
-  // TODO: the add may break things
   private static void ChildrenRideToMolokai() {
     oahuChildren -= 1;
     molokaiChildren += 1;
