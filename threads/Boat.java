@@ -130,12 +130,14 @@ indicates that an adult has rowed the boat across to Molokai
   private static void AdultRowToMolokai() {
     oahuAdults -= 1;
     molokaiAdults += 1;
+    boatLocation = Island.MOLOKAI
     bg.AdultRowToMolokai();
   }
 
   private static void ChildrenRowToMolokai() {
     oahuChildren -= 1;
     molokaiChildren += 1;
+    boatLocation = Island.MOLOKAI
     bg.ChildRowToMolokai();
   }
 
@@ -149,12 +151,14 @@ indicates that an adult has rowed the boat across to Molokai
   private static void AdultRowToOahu() {
     oahuAdults += 1;
     molokaiAdults -= 1;
+    boatLocation = Island.OAHU
     bg.AdultRowToOahu();
   }
 
   private static void ChildrenRowToOahu() {
     oahuChildren += 1;
     molokaiChildren -= 1;
+    boatLocation = Island.OAHU
     bg.ChildRowToOahu();
   }
 
