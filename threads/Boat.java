@@ -136,13 +136,13 @@ indicates that an adult has rowed the boat across to Molokai
   private static void ChildrenRowToMolokai() {
     oahuChildren -= 1;
     molokaiChildren += 1;
-    bg.childRowToMolokai();
+    bg.ChildRowToMolokai();
   }
 
   private static void ChildrenRideToMolokai() {
     oahuChildren -= 1;
     molokaiChildren += 1;
-    bg.childRideToMolokai();
+    bg.ChildRideToMolokai();
   }
 
   // this may be superfluous
@@ -155,13 +155,13 @@ indicates that an adult has rowed the boat across to Molokai
   private static void ChildrenRowToOahu() {
     oahuChildren += 1;
     molokaiChildren -= 1;
-    bg.childRowToOahu();
+    bg.ChildRowToOahu();
   }
 
   // This may be superfluous
   private static void ChildrenRideToOahu() {
     oahuChildren += 1;
     molokaiChildren -= 1;
-    bg.childRideToOahu();
+    bg.ChildRideToOahu();
   }
 }
