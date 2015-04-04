@@ -5,12 +5,42 @@ public class Boat
 {
   static BoatGrader bg;
 
+  static int foo = 3;
+
+  static Island boatLocation = Island.OAHU;
+
+  static int oahuChildren;
+  static int oahuAdults;
+
+  static int molokaiChildren = 0;
+  static int molokaiAdults = 0;
+
   static enum Island {
     OAHU, MOLOKAI
   }
 
   static enum Person {
     CHILD, ADULT
+  }
+
+  static int getNumberOfChildren(Island current) {
+    if(current == Island.MOLOKAI) {
+      return molokaiChildren;
+    } else {
+      return oahuChildren;
+    }
+  }
+
+  static int getNumberOfAdults(Island current) {
+    if(current == Island.MOLOKAI) {
+      return molokaiAdults;
+    } else {
+      return oahuAdults;
+    }
+  }
+
+  static int getTotalNumberOfPeople(Island current) {
+    return getNumberOfChildren(current) + getNumberOfAdults(current);
   }
 
   public static void selfTest()
@@ -36,6 +66,8 @@ public class Boat
     bg = b;
 
     // Instantiate global variables here
+    oahuChildren = children;
+    oahuAdults = adults;
 
     // Create threads here. See section 3.4 of the Nachos for Java
     // Walkthrough linkied from the projects page.
@@ -67,23 +99,61 @@ public class Boat
     KThread.currentThread().yield();
   }
 
-  static void AdultItinerary()
-  {
+  static void AdultItinerary() {
     /* This is where you should put your solutions. Make calls
        to the BoatGrader to show that it is synchronized. For
 example:
 bg.AdultRowToMolokai();
 indicates that an adult has rowed the boat across to Molokai
 */
-    System.out.println(Boat.foo);
+    Person personType = Person.ADULT;
+    Island currentIsland = Island.OAHU;
   }
 
-  static void ChildItinerary()
-  {
+  static void ChildItinerary() {
+    Person personType = Person.CHILD;
+    Island currentIsland = Island.OAHU;
   }
 
-  static void SampleItinerary()
-  {
+  static void AdultRowToMolokai() {
+    oahuAdults -= 1;
+    molokaiAdults += 1;
+    bg.AdultRowToMolokai();
+  }
+
+  static void ChildrenRowToMolokai() {
+    oahuChildren -= 1;
+    molokaiChildren += 1;
+    bg.childRowToMolokai();
+  }
+
+  static void ChildrenRideToMolokai() {
+    oahuChildren -= 1;
+    molokaiChildren += 1;
+    bg.childRideToMolokai();
+  }
+
+  // this may be superfluous
+  static void AdultRowToOahu() {
+    oahuAdults += 1;
+    molokaiAdults -= 1;
+    bg.AdultRowToOahu();
+  }
+
+  static void ChildrenRowToOahu() {
+    oahuChildren += 1;
+    molokaiChildren -= 1;
+    bg.childRowToOahu();
+  }
+
+  // This may be superfluous
+  static void ChildrenRideToOahu() {
+    oahuChildren += 1;
+    molokaiChildren -= 1;
+    bg.childRideToOahu();
+  }
+
+  static void SampleItinerary() {
     // Please note that this isn't a valid solution (you can't fit
     // all of them on the boat). Please also note that you may not
     // have a single thread calculate a solution and then just play
