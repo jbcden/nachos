@@ -26,7 +26,7 @@ public class Boat
     CHILD, ADULT
   }
 
-  static int getNumberOfChildrenOnCurrentIsland(Island current) {
+  static int getNumberOfChildren(Island current) {
     if(current == Island.MOLOKAI) {
       return molokaiChildren;
     } else {
@@ -34,7 +34,7 @@ public class Boat
     }
   }
 
-  static int getNumberOfAdultsOnCurrentIsland(Island current) {
+  static int getNumberOfAdults(Island current) {
     if(current == Island.MOLOKAI) {
       return molokaiAdults;
     } else {
@@ -42,7 +42,7 @@ public class Boat
     }
   }
 
-  static int getTotalNumberOfPeopleOnCurrentIsland(Island current) {
+  static int getTotalNumberOfPeople(Island current) {
     return getNumberOfChildren(current) + getNumberOfAdults(current);
   }
 
