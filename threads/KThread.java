@@ -203,8 +203,8 @@ public class KThread {
 
   public void releaseJoined() {
     KThread b = joinQueue.nextThread();
-    System.out.print("THIS SHOULD BE A: ");
-    System.out.println(b);
+    /* System.out.print("THIS SHOULD BE A: "); */
+    /* System.out.println(b); */
     if(b != null) {
       b.ready();
     }

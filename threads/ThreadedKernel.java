@@ -50,7 +50,8 @@ public class ThreadedKernel extends Kernel {
 	/* Semaphore.selfTest(); */
 	/* SynchList.selfTest(); */
 	//Communicator.selfTest();
-  PriorityScheduler.selfTest();
+  //PriorityScheduler.selfTest();
+  Boat.selfTest();
 	if (Machine.bank() != null) {
 	    ElevatorBank.selfTest();
 	}

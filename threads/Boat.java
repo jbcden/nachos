@@ -5,9 +5,19 @@ public class Boat
 {
   static BoatGrader bg;
 
+  static enum Island {
+    OAHU, MOLOKAI
+  }
+
+  static enum Person {
+    CHILD, ADULT
+  }
+
   public static void selfTest()
   {
     BoatGrader b = new BoatGrader();
+
+    // assume >= 2 children
 
     System.out.println("\n ***Testing Boats with only 2 children***");
     begin(0, 2, b);
@@ -28,7 +38,7 @@ public class Boat
     // Instantiate global variables here
 
     // Create threads here. See section 3.4 of the Nachos for Java
-    // Walkthrough linked from the projects page.
+    // Walkthrough linkied from the projects page.
 
     Runnable a = new Runnable() {
       public void run() {
@@ -65,6 +75,7 @@ example:
 bg.AdultRowToMolokai();
 indicates that an adult has rowed the boat across to Molokai
 */
+    System.out.println(Boat.foo);
   }
 
   static void ChildItinerary()
