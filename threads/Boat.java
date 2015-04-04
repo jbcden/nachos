@@ -115,44 +115,6 @@ indicates that an adult has rowed the boat across to Molokai
     Island currentIsland = Island.OAHU;
   }
 
-  static void AdultRowToMolokai() {
-    oahuAdults -= 1;
-    molokaiAdults += 1;
-    bg.AdultRowToMolokai();
-  }
-
-  static void ChildrenRowToMolokai() {
-    oahuChildren -= 1;
-    molokaiChildren += 1;
-    bg.childRowToMolokai();
-  }
-
-  static void ChildrenRideToMolokai() {
-    oahuChildren -= 1;
-    molokaiChildren += 1;
-    bg.childRideToMolokai();
-  }
-
-  // this may be superfluous
-  static void AdultRowToOahu() {
-    oahuAdults += 1;
-    molokaiAdults -= 1;
-    bg.AdultRowToOahu();
-  }
-
-  static void ChildrenRowToOahu() {
-    oahuChildren += 1;
-    molokaiChildren -= 1;
-    bg.childRowToOahu();
-  }
-
-  // This may be superfluous
-  static void ChildrenRideToOahu() {
-    oahuChildren += 1;
-    molokaiChildren -= 1;
-    bg.childRideToOahu();
-  }
-
   static void SampleItinerary() {
     // Please note that this isn't a valid solution (you can't fit
     // all of them on the boat). Please also note that you may not
@@ -165,4 +127,41 @@ indicates that an adult has rowed the boat across to Molokai
     bg.ChildRideToMolokai();
   }
 
+  private static void AdultRowToMolokai() {
+    oahuAdults -= 1;
+    molokaiAdults += 1;
+    bg.AdultRowToMolokai();
+  }
+
+  private static void ChildrenRowToMolokai() {
+    oahuChildren -= 1;
+    molokaiChildren += 1;
+    bg.childRowToMolokai();
+  }
+
+  private static void ChildrenRideToMolokai() {
+    oahuChildren -= 1;
+    molokaiChildren += 1;
+    bg.childRideToMolokai();
+  }
+
+  // this may be superfluous
+  private static void AdultRowToOahu() {
+    oahuAdults += 1;
+    molokaiAdults -= 1;
+    bg.AdultRowToOahu();
+  }
+
+  private static void ChildrenRowToOahu() {
+    oahuChildren += 1;
+    molokaiChildren -= 1;
+    bg.childRowToOahu();
+  }
+
+  // This may be superfluous
+  private static void ChildrenRideToOahu() {
+    oahuChildren += 1;
+    molokaiChildren -= 1;
+    bg.childRideToOahu();
+  }
 }
