@@ -1,5 +1,6 @@
 package nachos.threads;
 import nachos.ag.BoatGrader;
+import java.util.ArrayList;
 
 public class Boat
 {
@@ -14,6 +15,8 @@ public class Boat
 
   static int molokaiChildren = 0;
   static int molokaiAdults = 0;
+
+  static ArrayList boatPeople = new ArrayList<Person>();
 
   static enum Island {
     OAHU, MOLOKAI
@@ -127,23 +130,44 @@ indicates that an adult has rowed the boat across to Molokai
     bg.ChildRideToMolokai();
   }
 
+  private static boolean isBoatValid(Person p) {
+    if( p == Person.ADULT && boatPeople.isEmpty() ) {
+      return true;
+    }
+
+    if( p == Person.CHILD ) {
+      if (boatPeople.isEmpty()) {
+        return true;
+      } else if( boatPeople.contains(Person.ADULT) || boatPeople.size() == 2 ) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+    return false;
+  }
+
   private static void AdultRowToMolokai() {
     oahuAdults -= 1;
     molokaiAdults += 1;
-    boatLocation = Island.MOLOKAI
+
+    boatLocation = Island.MOLOKAI;
     bg.AdultRowToMolokai();
   }
 
   private static void ChildrenRowToMolokai() {
     oahuChildren -= 1;
     molokaiChildren += 1;
-    boatLocation = Island.MOLOKAI
+
+    boatLocation = Island.MOLOKAI;
     bg.ChildRowToMolokai();
   }
 
+  // TODO: the add may break things
   private static void ChildrenRideToMolokai() {
     oahuChildren -= 1;
     molokaiChildren += 1;
+
     bg.ChildRideToMolokai();
   }
 
@@ -151,14 +175,16 @@ indicates that an adult has rowed the boat across to Molokai
   private static void AdultRowToOahu() {
     oahuAdults += 1;
     molokaiAdults -= 1;
-    boatLocation = Island.OAHU
+
+    boatLocation = Island.OAHU;
     bg.AdultRowToOahu();
   }
 
   private static void ChildrenRowToOahu() {
     oahuChildren += 1;
     molokaiChildren -= 1;
-    boatLocation = Island.OAHU
+
+    boatLocation = Island.OAHU;
     bg.ChildRowToOahu();
   }
 
@@ -166,6 +192,7 @@ indicates that an adult has rowed the boat across to Molokai
   private static void ChildrenRideToOahu() {
     oahuChildren += 1;
     molokaiChildren -= 1;
+
     bg.ChildRideToOahu();
   }
 }
