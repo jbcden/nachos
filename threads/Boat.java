@@ -8,6 +8,9 @@ public class Boat
 
   static Island boatLocation = Island.OAHU;
 
+  static int totalChildren;
+  static int totalAdults;
+
   static int oahuChildren = 0;
   static int oahuAdults = 0;
 
@@ -71,6 +74,8 @@ public class Boat
     bg = b;
 
     // Instantiate global variables here
+    totalChildren = children;
+    totalAdults = adults;
 
     // Create threads here. See section 3.4 of the Nachos for Java
     // Walkthrough linkied from the projects page.
@@ -120,6 +125,10 @@ public class Boat
 
     Person personType = Person.CHILD;
     Island currentIsland = Island.OAHU;
+  }
+
+  static boolean isDone() { // assume correct for now
+    return (molokaiChildren == totalChildren) && (molokaiAdults == totalAdults);
   }
 
   static void SampleItinerary() {
