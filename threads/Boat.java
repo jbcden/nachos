@@ -104,13 +104,13 @@ public class Boat
     KThread.currentThread().yield();
   }
 
+  /* This is where you should put your solutions. Make calls
+     to the BoatGrader to show that it is synchronized. For
+        example:
+        bg.AdultRowToMolokai();
+        indicates that an adult has rowed the boat across to Molokai
+  */
   static void AdultItinerary() {
-    /* This is where you should put your solutions. Make calls
-       to the BoatGrader to show that it is synchronized. For
-example:
-bg.AdultRowToMolokai();
-indicates that an adult has rowed the boat across to Molokai
-*/
     oahuAdults += 1; // an adult has arrived on Oahu
 
     Person personType = Person.ADULT;
