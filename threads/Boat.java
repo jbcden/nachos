@@ -6,8 +6,6 @@ public class Boat
 {
   static BoatGrader bg;
 
-  static int foo = 3;
-
   static Island boatLocation = Island.OAHU;
 
   static int oahuChildren = 0;
