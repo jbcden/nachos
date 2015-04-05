@@ -10,8 +10,8 @@ public class Boat
 
   static Island boatLocation = Island.OAHU;
 
-  static int oahuChildren;
-  static int oahuAdults;
+  static int oahuChildren = 0;
+  static int oahuAdults = 0;
 
   static int molokaiChildren = 0;
   static int molokaiAdults = 0;
@@ -73,8 +73,6 @@ public class Boat
     bg = b;
 
     // Instantiate global variables here
-    oahuChildren = children;
-    oahuAdults = adults;
 
     // Create threads here. See section 3.4 of the Nachos for Java
     // Walkthrough linkied from the projects page.
@@ -113,11 +111,15 @@ example:
 bg.AdultRowToMolokai();
 indicates that an adult has rowed the boat across to Molokai
 */
+    oahuAdults += 1; // an adult has arrived on Oahu
+
     Person personType = Person.ADULT;
     Island currentIsland = Island.OAHU;
   }
 
   static void ChildItinerary() {
+    oahuChildren += 1; // a child has arrived on Oahu
+
     Person personType = Person.CHILD;
     Island currentIsland = Island.OAHU;
   }
