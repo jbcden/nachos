@@ -17,6 +17,24 @@ public class Boat
   static int molokaiChildren = 0;
   static int molokaiAdults = 0;
 
+  // Synchronization mechanisms
+  static Lock l = new Lock();
+  static Lock l2 = new Lock();
+
+  static Condition boatHere = new Condition(l);
+  static Condition boatFull = new Condition(l);
+  static Condition boatValid = new Condition(l);
+  static Semaphore waitForRower = new Semaphore(0);
+
+  static Semaphore peopleOnBoat = new Semaphore(1);
+  static Semaphore bLocation = new Semaphore(1);
+
+  static Semaphore mChildren = new Semaphore(1);
+  static Semaphore mAdults = new Semaphore(1);
+
+  static Semaphore oChildren = new Semaphore(1);
+  static Semaphore oAdults = new Semaphore(1);
+
   static ArrayList<Person> boatPeople = new ArrayList<Person>();
 
   static enum Island {
@@ -58,7 +76,7 @@ public class Boat
     // assume >= 2 children
 
     System.out.println("\n ***Testing Boats with only 2 children***");
-    begin(0, 2, b);
+    begin(0, 4, b);
 
     //	System.out.println("\n ***Testing Boats with 2 children, 1 adult***");
     //  	begin(1, 2, b);
@@ -104,7 +122,10 @@ public class Boat
       t.fork();
     }
 
-    KThread.currentThread().yield();
+    // allowed?
+    while(!isDone()) {
+      KThread.currentThread().yield();
+    }
   }
 
   /* This is where you should put your solutions. Make calls
@@ -119,6 +140,10 @@ public class Boat
     Person personType = Person.ADULT;
     Island currentIsland = Island.OAHU;
   }
+  /* Condition boatHere = new Condition(l); */
+  /* Condition boatFull = new Condition(l); */
+  /*  */
+  /* Semaphore peopleOnBoat = new Semaphore(1); */
 
   static void ChildItinerary() {
     oahuChildren += 1; // a child has arrived on Oahu
@@ -126,18 +151,79 @@ public class Boat
     Person personType = Person.CHILD;
     Island currentIsland = Island.OAHU;
 
-    // if the boat isn't here we can't do anything
-    if(!isBoatHere()) {
-      KThread.currentThread().yield();
-    }
-    // TODO we need to acquire a condition variable for the boat here
-    // TODO we need to acquire a condition variable for the boatPeople here
+    while(!isDone()) {
+      // if the boat isn't here we can't do anything
+      // we need to acquire a condition variable for the boat here
+      if(!isBoatHere(currentIsland)) {
+        l.acquire();
+        boatHere.sleep();
+        l.release();
+      } else {
+        l.acquire();
+        boatHere.wake();
+        l.release();
+      }
 
-    if(boatPeople.isEmpty()) {
-      currentIsland = rowToOtherIsland(currentIsland, personType);
-    } else if(isBoatValid(personType)) {
-      currentIsland = rideToOtherIsland(currentIsland, personType);
-    } // TODO we need to sleep on some condition variable here
+      // we need to acquire a semaphore for the boatPeople here
+      // we need to sleep on some condition variable here
+      if(!isBoatValid(personType)) {
+        l.acquire();
+        boatValid.sleep();
+        l.release();
+      } else {
+        l.acquire();
+        boatValid.wake();
+        l.release();
+      }
+
+      peopleOnBoat.P();
+      if(boatPeople.isEmpty()) {
+
+        boatPeople.add(personType);
+        /* System.out.println(boatPeople); */
+        Island tempIsland = rowToOtherIsland(currentIsland, personType);
+
+        /* l.acquire(); */
+
+        /* l.release(); */
+        /* System.out.println("PANDAS!!"); */
+        /* System.out.println(currentIsland); */
+        /* System.out.println(getNumberOfChildren(currentIsland)); */
+
+        if(getNumberOfChildren(currentIsland) > 0 && currentIsland == Island.OAHU) {
+          /* System.out.println("FUCK APPLES"); */
+          waitForRower.V();
+          l.acquire();
+          boatFull.sleep();
+          /* System.out.println("FUCK  ALL"); */
+          l.release();
+        }
+
+        currentIsland = tempIsland;
+      } else if(isBoatValid(personType)) {
+        /* System.out.println("FUCK MOOSE!!!"); */
+        /* l.acquire(); */
+        waitForRower.P();
+        /* System.out.println("FUCK ROWERS!!!"); */
+        /* l.release(); */
+
+        boatPeople.add(personType);
+        currentIsland = rideToOtherIsland(currentIsland, personType);
+
+        l.acquire();
+        boatFull.wake();
+        l.release();
+
+      }
+      boatPeople.clear();
+      peopleOnBoat.V();
+      // is this allowed??
+      if(!isDone()) {
+      /*   peopleOnBoat.P(); */
+        currentIsland = rowToOtherIsland(currentIsland, personType);
+        peopleOnBoat.V();
+      }
+    }
   }
 
   static Island rideToOtherIsland(Island current, Person p) {
@@ -198,49 +284,100 @@ public class Boat
   }
 
   private static void adultRowToMolokai() {
+    oAdults.P();
     oahuAdults -= 1;
-    molokaiAdults += 1;
+    oAdults.V();
 
+    mAdults.P();
+    molokaiAdults += 1;
+    mAdults.V();
+
+    bLocation.P();
     boatLocation = Island.MOLOKAI;
+    bLocation.V();
+
     bg.AdultRowToMolokai();
   }
 
   private static void childRowToMolokai() {
+    oChildren.P();
     oahuChildren -= 1;
-    molokaiChildren += 1;
+    oChildren.V();
 
+    mChildren.P();
+    molokaiChildren += 1;
+    mChildren.V();
+
+    bLocation.P();
     boatLocation = Island.MOLOKAI;
+    bLocation.V();
+
+    /* System.out.println("CHildren on Oahu " + oahuChildren); */
+    /* System.out.println("CHildren on Molokai " + molokaiChildren); */
+    /* System.out.println("Current Island is " + boatLocation); */
+
     bg.ChildRowToMolokai();
   }
 
   private static void childRideToMolokai() {
+    oChildren.P();
     oahuChildren -= 1;
+    oChildren.V();
+
+
+    mChildren.P();
     molokaiChildren += 1;
+    mChildren.V();
 
     bg.ChildRideToMolokai();
   }
 
   // this may be superfluous
   private static void adultRowToOahu() {
+    oAdults.P();
     oahuAdults += 1;
-    molokaiAdults -= 1;
+    oAdults.V();
 
+    mAdults.P();
+    molokaiAdults -= 1;
+    mAdults.V();
+
+    bLocation.P();
     boatLocation = Island.OAHU;
+    bLocation.V();
+
     bg.AdultRowToOahu();
   }
 
   private static void childRowToOahu() {
+    oChildren.P();
     oahuChildren += 1;
-    molokaiChildren -= 1;
+    oChildren.V();
 
+    mChildren.P();
+    molokaiChildren -= 1;
+    mChildren.V();
+
+    bLocation.P();
     boatLocation = Island.OAHU;
+    bLocation.V();
+
     bg.ChildRowToOahu();
   }
 
-  // This may be superfluous
+  // may be superfluous
   private static void childRideToOahu() {
+    oChildren.P();
     oahuChildren += 1;
+    oChildren.V();
+
+    mChildren.P();
     molokaiChildren -= 1;
+    mChildren.V();
+
+    bLocation.P();
+    boatLocation = Island.OAHU;
+    bLocation.V();
 
     bg.ChildRideToOahu();
   }
