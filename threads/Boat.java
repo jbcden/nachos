@@ -8,6 +8,8 @@ public class Boat
 
   static Island boatLocation = Island.OAHU;
 
+  static ArrayList<KThread> threads = new ArrayList<KThread>();
+
   static int totalChildren;
   static int totalAdults;
 
@@ -24,7 +26,13 @@ public class Boat
   static Condition boatHere = new Condition(l);
   static Condition boatFull = new Condition(l);
   static Condition boatValid = new Condition(l);
-  static Semaphore waitForRower = new Semaphore(0);
+
+  static Condition waitForPassenger = new Condition(l);
+  static Condition waitForRower = new Condition(l);
+
+  static Condition testComplete = new Condition(l);
+
+  /* static Semaphore waitForRower = new Semaphore(0); */
 
   static Semaphore peopleOnBoat = new Semaphore(1);
   static Semaphore bLocation = new Semaphore(1);
@@ -74,9 +82,11 @@ public class Boat
     BoatGrader b = new BoatGrader();
 
     // assume >= 2 children
+    int adults = 0;
+    int children = 2;
 
-    System.out.println("\n ***Testing Boats with only 2 children***");
-    begin(0, 4, b);
+    System.out.println("\n ***Testing Boats with " + children + " children***");
+    begin(adults, children, b);
 
     //	System.out.println("\n ***Testing Boats with 2 children, 1 adult***");
     //  	begin(1, 2, b);
@@ -107,6 +117,7 @@ public class Boat
     for (int i = 0; i < adults; i++) {
       KThread t = new KThread(a);
       t.setName("adult thread " + i);
+      threads.add(t);
       t.fork();
     }
 
@@ -119,12 +130,28 @@ public class Boat
     for (int i = 0; i < children; i++) {
       KThread t = new KThread(c);
       t.setName("child thread " + i);
+      threads.add(t);
       t.fork();
     }
 
+    l.acquire();
+    testComplete.sleep();
+    l.release();
+
     // allowed?
-    while(!isDone()) {
-      KThread.currentThread().yield();
+    if(!isDone()) {
+      l.acquire();
+      testComplete.sleep();
+      l.release();
+    }
+
+    finishAllThreads();
+  }
+
+  private static void finishAllThreads() {
+    for(int i=0; i<threads.size(); i++) {
+      KThread t = threads.get(i);
+      t.finish();
     }
   }
 
@@ -147,19 +174,27 @@ public class Boat
 
   static void ChildItinerary() {
     oahuChildren += 1; // a child has arrived on Oahu
+    boolean done = false;
 
     Person personType = Person.CHILD;
     Island currentIsland = Island.OAHU;
 
-    while(!isDone()) {
+    while(true) { // I don't think we can do this :(
       // if the boat isn't here we can't do anything
       // we need to acquire a condition variable for the boat here
+      System.out.println("I AM: "+ KThread.currentThread());
+      System.out.println("Check if the boat is here should return false if it is: " + !isBoatHere(currentIsland));
+      System.out.println("The boat is at: " + boatLocation);
+      System.out.println("I am at: " + currentIsland);
       if(!isBoatHere(currentIsland)) {
         l.acquire();
+        System.out.println("BOAT SLEEP");
         boatHere.sleep();
         l.release();
+        System.out.println("I AM FREE BITCHES!!");
       } else {
         l.acquire();
+        System.out.println("BOAT WAKE");
         boatHere.wake();
         l.release();
       }
@@ -168,6 +203,7 @@ public class Boat
       // we need to sleep on some condition variable here
       if(!isBoatValid(personType)) {
         l.acquire();
+        System.out.println("I AM NOT A VALID BOAT");
         boatValid.sleep();
         l.release();
       } else {
@@ -177,11 +213,12 @@ public class Boat
       }
 
       peopleOnBoat.P();
+      System.out.println("I AM HERE");
       if(boatPeople.isEmpty()) {
 
         boatPeople.add(personType);
+        /* Island tempIsland = rowToOtherIsland(currentIsland, personType); */
         /* System.out.println(boatPeople); */
-        Island tempIsland = rowToOtherIsland(currentIsland, personType);
 
         /* l.acquire(); */
 
@@ -190,39 +227,89 @@ public class Boat
         /* System.out.println(currentIsland); */
         /* System.out.println(getNumberOfChildren(currentIsland)); */
 
-        if(getNumberOfChildren(currentIsland) > 0 && currentIsland == Island.OAHU) {
+        // we check for zero b/c we decrease the number in the row method
+        if(getNumberOfChildren(currentIsland) > 1 && currentIsland == Island.OAHU) {
           /* System.out.println("FUCK APPLES"); */
-          waitForRower.V();
+
           l.acquire();
-          boatFull.sleep();
-          /* System.out.println("FUCK  ALL"); */
+          waitForRower.wake();
           l.release();
+          System.out.println("WOKE THE ROWER");
+
+          System.out.println("WAIT FOR PASSENGER");
+          l.acquire();
+          waitForPassenger.sleep();
+          l.release();
+          System.out.println("A PASSENGER HAS APPEARED!!");
+
+          /* waitForRower.V(); */
+          /* l.acquire(); */
+          /* boatFull.sleep(); */
+          /* #<{(| System.out.println("FUCK  ALL"); |)}># */
+          /* l.release(); */
+        }
+        currentIsland = rowToOtherIsland(currentIsland, personType);
+
+        if(getTotalNumberOfPeople(currentIsland) == 0) {
+          done = true;
         }
 
-        currentIsland = tempIsland;
+        /* currentIsland = tempIsland; */
+        /* System.out.println("THIS NEEDS TO HAPPEN BEFORE CONTEXT SWITCHING: " + KThread.currentThread() + " :" + tempIsland); */
       } else if(isBoatValid(personType)) {
+
         /* System.out.println("FUCK MOOSE!!!"); */
         /* l.acquire(); */
-        waitForRower.P();
+        /* waitForRower.P(); */
         /* System.out.println("FUCK ROWERS!!!"); */
         /* l.release(); */
 
-        boatPeople.add(personType);
-        currentIsland = rideToOtherIsland(currentIsland, personType);
+        System.out.println("HELP I AM STUCK! IN AN ELSE-IF CASE :O");
+        l.acquire();
+        waitForRower.sleep();
+        l.release();
+        System.out.println("A ROWER HAS APPEARED!!");
 
         l.acquire();
-        boatFull.wake();
+        waitForPassenger.wake();
         l.release();
+        System.out.println("WOKE THE PASSENGER");
 
+        boatPeople.add(personType);
+        Island tempIsland = rideToOtherIsland(currentIsland, personType);
+        /* System.out.println("THIS NEEDS TO HAPPEN BEFORE CONTEXT SWITCHING: " + currentIsland); */
+
+        if(getTotalNumberOfPeople(currentIsland) == 0) {
+          done = true;
+        }
+
+        currentIsland = tempIsland;
+
+        /* l.acquire(); */
+        /* boatFull.wake(); */
+        /* l.release(); */
+
+      } else {
+        /* System.out.println("NO GOOD"); */
+        continue;
       }
       boatPeople.clear();
       peopleOnBoat.V();
-      // is this allowed??
-      if(!isDone()) {
-      /*   peopleOnBoat.P(); */
-        currentIsland = rowToOtherIsland(currentIsland, personType);
-        peopleOnBoat.V();
+
+      if(done) {
+        l.acquire();
+        testComplete.wake();
+        l.release();
       }
+
+      done = false;
+
+      // is this allowed??
+      /* if(!isDone()) { */
+      /* #<{(|   peopleOnBoat.P(); |)}># */
+      /*   currentIsland = rowToOtherIsland(currentIsland, personType); */
+      /*   peopleOnBoat.V(); */
+      /* } */
     }
   }
 
@@ -329,6 +416,10 @@ public class Boat
     molokaiChildren += 1;
     mChildren.V();
 
+    /* bLocation.P(); */
+    /* boatLocation = Island.MOLOKAI; */
+    /* bLocation.V(); */
+
     bg.ChildRideToMolokai();
   }
 
@@ -357,6 +448,8 @@ public class Boat
     mChildren.P();
     molokaiChildren -= 1;
     mChildren.V();
+
+    /* System.out.println("If this is not Molokai we in trouble: " +boatLocation); */
 
     bLocation.P();
     boatLocation = Island.OAHU;

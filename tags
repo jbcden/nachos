@@ -8,12 +8,13 @@ A	test/matmult.c	/^int A[Dim][Dim];$/;"	v
 A	test/sort.c	17;"	d	file:
 ADD	machine/Processor.java	/^	    ADD		= 2,$/;"	f	class:Processor.Mips
 ADDR	machine/Processor.java	/^	    ADDR		= 'a',	\/\/ imm(rs)$/;"	f	class:Processor.Mips
+ADULT	threads/Boat.java	/^    CHILD, ADULT$/;"	e	enum:Boat.Person	file:
 ALLDIRS	Makefile	/^ALLDIRS = machine security ag threads userprog vm network$/;"	m
 AND	machine/Processor.java	/^	    AND		= 10,$/;"	f	class:Processor.Mips
 AR	test/Makefile	/^AR = $(GCCDIR)ar$/;"	m
 AS	test/Makefile	/^AS = $(GCCDIR)as$/;"	m
 ASFLAGS	test/Makefile	/^ASFLAGS = -mips1$/;"	m
-AdultItinerary	threads/Boat.java	/^    static void AdultItinerary()$/;"	m	class:Boat
+AdultItinerary	threads/Boat.java	/^  static void AdultItinerary() {$/;"	m	class:Boat
 AdultRideToMolokai	ag/BoatGrader.java	/^    public void AdultRideToMolokai() {$/;"	m	class:BoatGrader
 AdultRideToOahu	ag/BoatGrader.java	/^    public void AdultRideToOahu() {$/;"	m	class:BoatGrader
 AdultRowToMolokai	ag/BoatGrader.java	/^    public void AdultRowToMolokai() {$/;"	m	class:BoatGrader
@@ -44,10 +45,11 @@ BoatGrader	ag/BoatGrader.java	/^public class BoatGrader {$/;"	c
 C	test/matmult.c	/^int C[Dim][Dim];$/;"	v
 CC	test/Makefile	/^CC = $(GCCDIR)gcc$/;"	m
 CFLAGS	test/Makefile	/^CFLAGS = -O2 -B$(GCCDIR) -G 0 -Wa,-mips1 -nostdlib -ffreestanding$/;"	m
+CHILD	threads/Boat.java	/^    CHILD, ADULT$/;"	e	enum:Boat.Person	file:
 CLASSFILES	Makefile	/^CLASSFILES := $(foreach dir,$(DIRS),$(patsubst %,nachos\/$(dir)\/%.class,$($(dir))))$/;"	m
 CPP	test/Makefile	/^CPP = $(GCCDIR)cpp$/;"	m
 CPPFLAGS	test/Makefile	/^CPPFLAGS =$/;"	m
-ChildItinerary	threads/Boat.java	/^    static void ChildItinerary()$/;"	m	class:Boat
+ChildItinerary	threads/Boat.java	/^  static void ChildItinerary() {$/;"	m	class:Boat
 ChildRideToMolokai	ag/BoatGrader.java	/^    public void ChildRideToMolokai() {$/;"	m	class:BoatGrader
 ChildRideToOahu	ag/BoatGrader.java	/^    public void ChildRideToOahu() {$/;"	m	class:BoatGrader
 ChildRowToMolokai	ag/BoatGrader.java	/^    public void ChildRowToMolokai() {$/;"	m	class:BoatGrader
@@ -60,10 +62,10 @@ CoffSection	machine/CoffSection.java	/^    public CoffSection(OpenFile file, Cof
 CoffSection	machine/CoffSection.java	/^public class CoffSection {$/;"	c
 Communicator	threads/Communicator.java	/^    public Communicator() {$/;"	m	class:Communicator
 Communicator	threads/Communicator.java	/^public class Communicator {$/;"	c
-Condition	threads/Condition.java	/^    public Condition(Lock conditionLock) {$/;"	m	class:Condition
+Condition	threads/Condition.java	/^  public Condition(Lock conditionLock) {$/;"	m	class:Condition
 Condition	threads/Condition.java	/^public class Condition {$/;"	c
-Condition2	threads/Condition2.java	/^    public Condition2(Lock conditionLock) {$/;"	m	class:Condition2
-Condition2	threads/Condition2.java	/^public class Condition2 {$/;"	c
+Condition2	threads/Condition2.java	/^  public Condition2(Lock conditionLock) {$/;"	m	class:Condition2
+Condition2	threads/Condition2.java	/^public class Condition2 { \/\/ Operations: sleep(), wake(), and wakeAll()$/;"	c
 Config	machine/Config.java	/^public final class Config {$/;"	c
 ConsoleTime	machine/Stats.java	/^    public static final int ConsoleTime = 100;$/;"	f	class:Stats
 DELAYEDLOAD	machine/Processor.java	/^	    DELAYEDLOAD	= 0x00000080,$/;"	f	class:Processor.Mips
@@ -104,6 +106,8 @@ FileRemover	machine/StubFileSystem.java	/^    private class FileRemover implemen
 FileSystem	machine/FileSystem.java	/^public interface FileSystem {$/;"	i
 Floor	machine/ElevatorGui.java	/^	Floor(int floor, int numRiders) {$/;"	m	class:ElevatorGui.Floor
 Floor	machine/ElevatorGui.java	/^    private class Floor extends Canvas {$/;"	c	class:ElevatorGui
+FooTest	threads/PriorityScheduler.java	/^    FooTest(int n, String s) {$/;"	m	class:PriorityScheduler.FooTest
+FooTest	threads/PriorityScheduler.java	/^  private static class FooTest implements Runnable {$/;"	c	class:PriorityScheduler
 GCCDIR	test/Makefile	/^GCCDIR = $(ARCHDIR)\/mips-$/;"	m
 IFMT	machine/Processor.java	/^	    IFMT = 1,$/;"	f	class:Processor.Mips
 IMM	machine/Processor.java	/^	    IMM			= 'i',$/;"	f	class:Processor.Mips
@@ -113,6 +117,7 @@ Interrupt	machine/Interrupt.java	/^    public Interrupt(Privilege privilege) {$/
 Interrupt	machine/Interrupt.java	/^public final class Interrupt {$/;"	c
 InterruptPrivilege	machine/Interrupt.java	/^    private class InterruptPrivilege implements Privilege.InterruptPrivilege {$/;"	c	class:Interrupt
 InterruptPrivilege	security/Privilege.java	/^    public interface InterruptPrivilege {$/;"	i	class:Privilege
+Island	threads/Boat.java	/^  static enum Island {$/;"	g	class:Boat
 JAVADOCPARAMS	Makefile	/^JAVADOCPARAMS = -doctitle "Nachos 5.0 Java" -protected \\$/;"	m
 JFMT	machine/Processor.java	/^	    JFMT = 2,$/;"	f	class:Processor.Mips
 JUMP	machine/Processor.java	/^	    JUMP	= 25,$/;"	f	class:Processor.Mips
@@ -134,6 +139,8 @@ LWL	machine/Processor.java	/^	    LWL		= 36,$/;"	f	class:Processor.Mips
 LWR	machine/Processor.java	/^	    LWR		= 37,$/;"	f	class:Processor.Mips
 Lib	machine/Lib.java	/^    private Lib() {$/;"	m	class:Lib	file:
 Lib	machine/Lib.java	/^public final class Lib {$/;"	c
+ListenTest	threads/Communicator.java	/^	ListenTest(Communicator listener) {$/;"	m	class:Communicator.ListenTest
+ListenTest	threads/Communicator.java	/^    private static class ListenTest implements Runnable {$/;"	c	class:Communicator
 Lock	threads/Lock.java	/^    public Lock() {$/;"	m	class:Lock
 Lock	threads/Lock.java	/^public class Lock {$/;"	c
 LotteryScheduler	threads/LotteryScheduler.java	/^    public LotteryScheduler() {$/;"	m	class:LotteryScheduler
@@ -143,6 +150,7 @@ MAXARGS	test/sh.c	7;"	d	file:
 MAXARGSIZE	test/sh.c	6;"	d	file:
 MFHI	machine/Processor.java	/^	    MFHI	= 22,$/;"	f	class:Processor.Mips
 MFLO	machine/Processor.java	/^	    MFLO	= 21,$/;"	f	class:Processor.Mips
+MOLOKAI	threads/Boat.java	/^    OAHU, MOLOKAI$/;"	e	enum:Boat.Island	file:
 MTHI	machine/Processor.java	/^	    MTHI	= 24,$/;"	f	class:Processor.Mips
 MTLO	machine/Processor.java	/^	    MTLO	= 23,$/;"	f	class:Processor.Mips
 MULT	machine/Processor.java	/^	    MULT	= 4,$/;"	f	class:Processor.Mips
@@ -173,6 +181,7 @@ NetProcess	network/NetProcess.java	/^public class NetProcess extends VMProcess {
 NetworkLink	machine/NetworkLink.java	/^    public NetworkLink(Privilege privilege) {$/;"	m	class:NetworkLink
 NetworkLink	machine/NetworkLink.java	/^public class NetworkLink {$/;"	c
 NetworkTime	machine/Stats.java	/^    public static final int NetworkTime = 100;$/;"	f	class:Stats
+OAHU	threads/Boat.java	/^    OAHU, MOLOKAI$/;"	e	enum:Boat.Island	file:
 OR	machine/Processor.java	/^	    OR		= 11,$/;"	f	class:Processor.Mips
 OVERFLOW	machine/Processor.java	/^	    OVERFLOW	= 0x00000004,$/;"	f	class:Processor.Mips
 OpenFile	machine/OpenFile.java	/^    public OpenFile() {$/;"	m	class:OpenFile
@@ -181,24 +190,25 @@ OpenFile	machine/OpenFile.java	/^public class OpenFile {$/;"	c
 OpenFileWithPosition	machine/OpenFileWithPosition.java	/^    public OpenFileWithPosition() {$/;"	m	class:OpenFileWithPosition
 OpenFileWithPosition	machine/OpenFileWithPosition.java	/^    public OpenFileWithPosition(FileSystem fileSystem, String name) {$/;"	m	class:OpenFileWithPosition
 OpenFileWithPosition	machine/OpenFileWithPosition.java	/^public abstract class OpenFileWithPosition extends OpenFile {$/;"	c
-P	threads/Semaphore.java	/^    public void P() {$/;"	m	class:Semaphore
+P	threads/Semaphore.java	/^  public void P() {$/;"	m	class:Semaphore
 PACKAGES	Makefile	/^PACKAGES := $(patsubst %,nachos.%,$(ALLDIRS))$/;"	m
 Packet	machine/Packet.java	/^    public Packet(byte[] packetBytes) throws MalformedPacketException {$/;"	m	class:Packet
 Packet	machine/Packet.java	/^    public Packet(int dstLink, int srcLink, byte[] contents)$/;"	m	class:Packet
 Packet	machine/Packet.java	/^public class Packet {$/;"	c
 PendingInterrupt	machine/Interrupt.java	/^	PendingInterrupt(long time, String type, Runnable handler) {$/;"	m	class:Interrupt.PendingInterrupt
 PendingInterrupt	machine/Interrupt.java	/^    private class PendingInterrupt implements Comparable {$/;"	c	class:Interrupt
+Person	threads/Boat.java	/^  static enum Person {$/;"	g	class:Boat
 PingTest	threads/KThread.java	/^    PingTest(int which) {$/;"	m	class:KThread.PingTest
 PingTest	threads/KThread.java	/^  private static class PingTest implements Runnable {$/;"	c	class:KThread
-PingTest	threads/Semaphore.java	/^	PingTest(Semaphore ping, Semaphore pong) {$/;"	m	class:Semaphore.PingTest
-PingTest	threads/Semaphore.java	/^    private static class PingTest implements Runnable {$/;"	c	class:Semaphore
-PingTest	threads/SynchList.java	/^	PingTest(SynchList ping, SynchList pong) {$/;"	m	class:SynchList.PingTest
-PingTest	threads/SynchList.java	/^    private static class PingTest implements Runnable {$/;"	c	class:SynchList
+PingTest	threads/Semaphore.java	/^    PingTest(Semaphore ping, Semaphore pong) {$/;"	m	class:Semaphore.PingTest
+PingTest	threads/Semaphore.java	/^  private static class PingTest implements Runnable {$/;"	c	class:Semaphore
+PingTest	threads/SynchList.java	/^    PingTest(SynchList ping, SynchList pong) {$/;"	m	class:SynchList.PingTest
+PingTest	threads/SynchList.java	/^  private static class PingTest implements Runnable {$/;"	c	class:SynchList
 PostOffice	network/PostOffice.java	/^    public PostOffice() {$/;"	m	class:PostOffice
 PostOffice	network/PostOffice.java	/^public class PostOffice {$/;"	c
-PriorityQueue	threads/PriorityScheduler.java	/^	PriorityQueue(boolean transferPriority) {$/;"	m	class:PriorityScheduler.PriorityQueue
-PriorityQueue	threads/PriorityScheduler.java	/^    protected class PriorityQueue extends ThreadQueue {$/;"	c	class:PriorityScheduler
-PriorityScheduler	threads/PriorityScheduler.java	/^    public PriorityScheduler() {$/;"	m	class:PriorityScheduler
+PriorityQueue	threads/PriorityScheduler.java	/^    PriorityQueue(boolean transferPriority) {$/;"	m	class:PriorityScheduler.PriorityQueue
+PriorityQueue	threads/PriorityScheduler.java	/^  protected class PriorityQueue extends ThreadQueue {$/;"	c	class:PriorityScheduler
+PriorityScheduler	threads/PriorityScheduler.java	/^  public PriorityScheduler() {$/;"	m	class:PriorityScheduler
 PriorityScheduler	threads/PriorityScheduler.java	/^public class PriorityScheduler extends Scheduler {$/;"	c
 Privilege	security/Privilege.java	/^    public Privilege() {$/;"	m	class:Privilege
 Privilege	security/Privilege.java	/^public abstract class Privilege {$/;"	c
@@ -250,13 +260,15 @@ SWR	machine/Processor.java	/^	    SWR		= 40,$/;"	f	class:Processor.Mips
 SYSCALL	machine/Processor.java	/^	    SYSCALL	= 32,$/;"	f	class:Processor.Mips
 SYSCALLSTUB	test/start.s	/^#define SYSCALLSTUB(name, number) \\$/;"	d
 SYSCALL_H	test/syscall.h	10;"	d
-SampleItinerary	threads/Boat.java	/^    static void SampleItinerary()$/;"	m	class:Boat
+SampleItinerary	threads/Boat.java	/^  static void SampleItinerary() {$/;"	m	class:Boat
 Scheduler	threads/Scheduler.java	/^    public Scheduler() {$/;"	m	class:Scheduler
 Scheduler	threads/Scheduler.java	/^public abstract class Scheduler {$/;"	c
 SeekTime	machine/Stats.java	/^    public static final int SeekTime = 500;$/;"	f	class:Stats
-Semaphore	threads/Semaphore.java	/^    public Semaphore(int initialValue) {$/;"	m	class:Semaphore
+Semaphore	threads/Semaphore.java	/^  public Semaphore(int initialValue) {$/;"	m	class:Semaphore
 Semaphore	threads/Semaphore.java	/^public class Semaphore {$/;"	c
 SerialConsole	machine/SerialConsole.java	/^public interface SerialConsole {$/;"	i
+SpeakTest	threads/Communicator.java	/^	SpeakTest(Communicator speaker, int word) {$/;"	m	class:Communicator.SpeakTest
+SpeakTest	threads/Communicator.java	/^    private static class SpeakTest implements Runnable {$/;"	c	class:Communicator
 StandardConsole	machine/StandardConsole.java	/^    public StandardConsole(Privilege privilege) {$/;"	m	class:StandardConsole
 StandardConsole	machine/StandardConsole.java	/^public class StandardConsole implements SerialConsole {$/;"	c
 Stats	machine/Stats.java	/^    public Stats() {$/;"	m	class:Stats
@@ -267,7 +279,7 @@ StubOpenFile	machine/StubFileSystem.java	/^	StubOpenFile(final String name, fina
 StubOpenFile	machine/StubFileSystem.java	/^    private class StubOpenFile extends OpenFileWithPosition {$/;"	c	class:StubFileSystem
 SynchConsole	userprog/SynchConsole.java	/^    public SynchConsole(SerialConsole console) {$/;"	m	class:SynchConsole
 SynchConsole	userprog/SynchConsole.java	/^public class SynchConsole {$/;"	c
-SynchList	threads/SynchList.java	/^    public SynchList() {$/;"	m	class:SynchList
+SynchList	threads/SynchList.java	/^  public SynchList() {$/;"	m	class:SynchList
 SynchList	threads/SynchList.java	/^public class SynchList {$/;"	c
 TARGET	machine/Processor.java	/^	    TARGET		= 'j',$/;"	f	class:Processor.Mips
 TARGETS	test/Makefile	/^TARGETS = halt sh matmult sort echo cat cp mv rm #chat chatserver$/;"	m
@@ -275,9 +287,17 @@ TCB	machine/TCB.java	/^    public TCB() {$/;"	m	class:TCB
 TCB	machine/TCB.java	/^public final class TCB {$/;"	c
 TCBPrivilege	machine/TCB.java	/^    private static class TCBPrivilege implements Privilege.TCBPrivilege {$/;"	c	class:TCB
 TCBPrivilege	security/Privilege.java	/^    public interface TCBPrivilege {$/;"	i	class:Privilege
+ThreadATest	threads/PriorityScheduler.java	/^    ThreadATest(Lock testLock) {$/;"	m	class:PriorityScheduler.ThreadATest
+ThreadATest	threads/PriorityScheduler.java	/^  private static class ThreadATest implements Runnable {$/;"	c	class:PriorityScheduler
+ThreadBTest	threads/PriorityScheduler.java	/^    ThreadBTest(Lock testLock) {$/;"	m	class:PriorityScheduler.ThreadBTest
+ThreadBTest	threads/PriorityScheduler.java	/^  private static class ThreadBTest implements Runnable {$/;"	c	class:PriorityScheduler
+ThreadCTest	threads/PriorityScheduler.java	/^    ThreadCTest() {$/;"	m	class:PriorityScheduler.ThreadCTest
+ThreadCTest	threads/PriorityScheduler.java	/^  private static class ThreadCTest implements Runnable {$/;"	c	class:PriorityScheduler
+ThreadComparator	threads/PriorityScheduler.java	/^    ThreadComparator() {$/;"	m	class:PriorityScheduler.ThreadComparator
+ThreadComparator	threads/PriorityScheduler.java	/^  protected class ThreadComparator implements Comparator<ThreadState> { \/\/ see ThreadState class at line ~200$/;"	c	class:PriorityScheduler
 ThreadQueue	threads/ThreadQueue.java	/^public abstract class ThreadQueue {$/;"	c
-ThreadState	threads/PriorityScheduler.java	/^	public ThreadState(KThread thread) {$/;"	m	class:PriorityScheduler.ThreadState
-ThreadState	threads/PriorityScheduler.java	/^    protected class ThreadState {$/;"	c	class:PriorityScheduler
+ThreadState	threads/PriorityScheduler.java	/^    public ThreadState(KThread thread) {$/;"	m	class:PriorityScheduler.ThreadState
+ThreadState	threads/PriorityScheduler.java	/^  protected class ThreadState {$/;"	c	class:PriorityScheduler
 ThreadedKernel	threads/ThreadedKernel.java	/^    public ThreadedKernel() {$/;"	m	class:ThreadedKernel
 ThreadedKernel	threads/ThreadedKernel.java	/^public class ThreadedKernel extends Kernel {$/;"	c
 Timer	machine/Timer.java	/^    public Timer(Privilege privilege) {$/;"	m	class:Timer
@@ -296,7 +316,7 @@ UserKernel	userprog/UserKernel.java	/^public class UserKernel extends ThreadedKe
 UserProcess	userprog/UserProcess.java	/^    public UserProcess() {$/;"	m	class:UserProcess
 UserProcess	userprog/UserProcess.java	/^public class UserProcess {$/;"	c
 UserTick	machine/Stats.java	/^    public static final int UserTick = 1;$/;"	f	class:Stats
-V	threads/Semaphore.java	/^    public void V() {$/;"	m	class:Semaphore
+V	threads/Semaphore.java	/^  public void V() {$/;"	m	class:Semaphore
 VMKernel	vm/VMKernel.java	/^    public VMKernel() {$/;"	m	class:VMKernel
 VMKernel	vm/VMKernel.java	/^public class VMKernel extends UserKernel {$/;"	c
 VMProcess	vm/VMProcess.java	/^    public VMProcess() {$/;"	m	class:VMProcess
@@ -363,16 +383,18 @@ __va_rounded_size	test/va-mips.h	77;"	d
 __void_type_class	test/va-mips.h	/^  __void_type_class,$/;"	e	enum:__anon2
 _vsprintf	test/printf.c	/^static int _vsprintf(char *s, char *format, va_list ap) {$/;"	f	file:
 acquire	threads/Lock.java	/^    public void acquire() {$/;"	m	class:Lock
-acquire	threads/PriorityScheduler.java	/^	public void acquire(KThread thread) {$/;"	m	class:PriorityScheduler.PriorityQueue
-acquire	threads/PriorityScheduler.java	/^	public void acquire(PriorityQueue waitQueue) {$/;"	m	class:PriorityScheduler.ThreadState
+acquire	threads/PriorityScheduler.java	/^    public void acquire(KThread thread) {$/;"	m	class:PriorityScheduler.PriorityQueue
+acquire	threads/PriorityScheduler.java	/^    public void acquire(PriorityQueue waitQueue) {$/;"	m	class:PriorityScheduler.ThreadState
 acquire	threads/RoundRobinScheduler.java	/^	public void acquire(KThread thread) {$/;"	m	class:RoundRobinScheduler.FifoQueue
 acquire	threads/ThreadQueue.java	/^    public abstract void acquire(KThread thread);$/;"	m	class:ThreadQueue
-add	threads/SynchList.java	/^    public void add(Object o) {$/;"	m	class:SynchList
+add	threads/SynchList.java	/^  public void add(Object o) {$/;"	m	class:SynchList
 addExitNotificationHandler	security/Privilege.java	/^    public void addExitNotificationHandler(Runnable handler) {$/;"	m	class:Privilege
 addRider	machine/ElevatorBank.java	/^    public RiderControls addRider(RiderInterface rider,$/;"	m	class:ElevatorBank
 addRider	machine/ElevatorGui.java	/^	void addRider() {$/;"	m	class:ElevatorGui.ElevatorShaft
 addRider	machine/ElevatorGui.java	/^	void addRider() {$/;"	m	class:ElevatorGui.Floor
 addr	machine/Processor.java	/^	int addr, nextPC, jtarget, dstReg;$/;"	f	class:Processor.Instruction
+adultRowToMolokai	threads/Boat.java	/^  private static void adultRowToMolokai() {$/;"	m	class:Boat	file:
+adultRowToOahu	threads/Boat.java	/^  private static void adultRowToOahu() {$/;"	m	class:Boat	file:
 advancePC	machine/Processor.java	/^    private void advancePC(int nextPC) {$/;"	m	class:Processor	file:
 advancePC	machine/Processor.java	/^    public void advancePC() {$/;"	m	class:Processor
 ag	Makefile	/^ag =		AutoGrader BoatGrader$/;"	m
@@ -406,14 +428,21 @@ autoGrader	machine/Machine.java	/^    private static AutoGrader autoGrader = nul
 autoGrader	machine/Machine.java	/^    public static AutoGrader autoGrader() { return autoGrader; }$/;"	m	class:Machine
 autoGraderClassName	machine/Machine.java	/^    private static String autoGraderClassName = "nachos.ag.AutoGrader";$/;"	f	class:Machine	file:
 autoGraderInterrupt	machine/Timer.java	/^    private Runnable autoGraderInterrupt;$/;"	f	class:Timer	file:
+bLocation	threads/Boat.java	/^  static Semaphore bLocation = new Semaphore(1);$/;"	f	class:Boat
 badVAddr	machine/Processor.java	/^	private int cause, badVAddr;$/;"	f	class:Processor.MipsException	file:
 bank	machine/Machine.java	/^    private static ElevatorBank bank = null;$/;"	f	class:Machine	file:
 bank	machine/Machine.java	/^    public static ElevatorBank bank() { return bank; }$/;"	m	class:Machine
 baseDirectory	machine/Machine.java	/^    private static File baseDirectory, nachosDirectory, testDirectory;$/;"	f	class:Machine	file:
 beep	test/stdio.h	31;"	d
-begin	threads/Boat.java	/^    public static void begin( int adults, int children, BoatGrader b )$/;"	m	class:Boat
+begin	threads/Boat.java	/^  public static void begin( int adults, int children, BoatGrader b )$/;"	m	class:Boat
 begin	threads/KThread.java	/^  private void begin() {$/;"	m	class:KThread	file:
-bg	threads/Boat.java	/^    static BoatGrader bg;$/;"	f	class:Boat
+bg	threads/Boat.java	/^  static BoatGrader bg;$/;"	f	class:Boat
+blocked	threads/KThread.java	/^  private KThread blocked;$/;"	f	class:KThread	file:
+boatFull	threads/Boat.java	/^  static Condition boatFull = new Condition(l);$/;"	f	class:Boat
+boatHere	threads/Boat.java	/^  static Condition boatHere = new Condition(l);$/;"	f	class:Boat
+boatLocation	threads/Boat.java	/^  static Island boatLocation = Island.OAHU;$/;"	f	class:Boat
+boatPeople	threads/Boat.java	/^  static ArrayList<Person> boatPeople = new ArrayList<Person>();$/;"	f	class:Boat
+boatValid	threads/Boat.java	/^  static Condition boatValid = new Condition(l);$/;"	f	class:Boat
 branch	machine/Processor.java	/^	boolean branch;$/;"	f	class:Processor.Instruction
 buf	test/cat.c	/^char buf[BUFSIZE];$/;"	v
 buf	test/cp.c	/^char buf[BUFSIZE];$/;"	v
@@ -444,6 +473,10 @@ checkPermission	security/NachosSecurityManager.java	/^    public void checkPermi
 checkStaticField	machine/Lib.java	/^    public static void checkStaticField(Class cls, String fieldName,$/;"	m	class:Lib
 checkStaticMethod	machine/Lib.java	/^    public static void checkStaticMethod(Class cls, String methodName,$/;"	m	class:Lib
 checkUserClasses	machine/Machine.java	/^    private static void checkUserClasses() {$/;"	m	class:Machine	file:
+childRideToMolokai	threads/Boat.java	/^  private static void childRideToMolokai() {$/;"	m	class:Boat	file:
+childRideToOahu	threads/Boat.java	/^  private static void childRideToOahu() {$/;"	m	class:Boat	file:
+childRowToMolokai	threads/Boat.java	/^  private static void childRowToMolokai() {$/;"	m	class:Boat	file:
+childRowToOahu	threads/Boat.java	/^  private static void childRowToOahu() {$/;"	m	class:Boat	file:
 clearDownButton	machine/ElevatorGui.java	/^	void clearDownButton() {$/;"	m	class:ElevatorGui.Floor
 clearDownButton	machine/ElevatorGui.java	/^    void clearDownButton(int floor) {$/;"	m	class:ElevatorGui
 clearUpButton	machine/ElevatorGui.java	/^	void clearUpButton() {$/;"	m	class:ElevatorGui.Floor
@@ -461,10 +494,11 @@ closeDoors	machine/ElevatorGui.java	/^	void closeDoors() {$/;"	m	class:ElevatorG
 closeDoors	machine/ElevatorGui.java	/^    void closeDoors(int elevator) {$/;"	m	class:ElevatorGui
 coff	machine/CoffSection.java	/^    protected Coff coff;$/;"	f	class:CoffSection
 coff	userprog/UserProcess.java	/^    protected Coff coff;$/;"	f	class:UserProcess
+compare	threads/PriorityScheduler.java	/^    public int compare(ThreadState s1, ThreadState s2) {$/;"	m	class:PriorityScheduler.ThreadComparator
 compareTo	machine/Interrupt.java	/^	public int compareTo(Object o) {$/;"	m	class:Interrupt.PendingInterrupt
 compareTo	threads/KThread.java	/^  public int compareTo(Object o) {$/;"	m	class:KThread
-conditionLock	threads/Condition.java	/^    private Lock conditionLock;$/;"	f	class:Condition	file:
-conditionLock	threads/Condition2.java	/^    private Lock conditionLock;$/;"	f	class:Condition2	file:
+conditionLock	threads/Condition.java	/^  private Lock conditionLock;$/;"	f	class:Condition	file:
+conditionLock	threads/Condition2.java	/^  private Lock conditionLock; \/\/ Operations: acquire(), release(), isHeldByCurrentThread()$/;"	f	class:Condition2	file:
 config	machine/Config.java	/^    private static HashMap<String, String> config;$/;"	f	class:Config	file:
 configError	machine/Config.java	/^    private static void configError(String message) {$/;"	m	class:Config	file:
 configFile	machine/Config.java	/^    private static String configFile;$/;"	f	class:Config	file:
@@ -485,6 +519,7 @@ copyright	machine/Machine.java	/^    private static final String copyright = "\\
 createDevices	machine/Machine.java	/^    private static void createDevices() {$/;"	m	class:Machine	file:
 createIdleThread	threads/KThread.java	/^  private static void createIdleThread() {$/;"	m	class:KThread	file:
 createLoader	ag/AutoGrader.java	/^    public Coff createLoader(OpenFile file) {$/;"	m	class:AutoGrader
+currentLockHolder	threads/PriorityScheduler.java	/^    public static ThreadState currentLockHolder;$/;"	f	class:PriorityScheduler
 currentProcess	userprog/UserKernel.java	/^    public static UserProcess currentProcess() {$/;"	m	class:UserKernel
 currentTCB	machine/TCB.java	/^    private static TCB currentTCB = null;$/;"	f	class:TCB	file:
 currentTCB	machine/TCB.java	/^    public static TCB currentTCB() {$/;"	m	class:TCB
@@ -507,7 +542,7 @@ dbgVM	vm/VMProcess.java	/^    private static final char dbgVM = 'v';$/;"	f	class
 debug	machine/Lib.java	/^    public static void debug(char flag, String message) {$/;"	m	class:Lib
 debugFlags	machine/Lib.java	/^    private static boolean debugFlags[];$/;"	f	class:Lib	file:
 decode	machine/Processor.java	/^	private void decode() {$/;"	m	class:Processor.Instruction	file:
-decreasePriority	threads/PriorityScheduler.java	/^    public boolean decreasePriority() {$/;"	m	class:PriorityScheduler
+decreasePriority	threads/PriorityScheduler.java	/^  public boolean decreasePriority() {$/;"	m	class:PriorityScheduler
 decreasePriority	threads/Scheduler.java	/^    public boolean decreasePriority() {$/;"	m	class:Scheduler
 delay	machine/StubFileSystem.java	/^    private void delay() {$/;"	m	class:StubFileSystem	file:
 delayedLoad	machine/Processor.java	/^    private void delayedLoad(int nextLoadTarget, int nextLoadValue,$/;"	m	class:Processor	file:
@@ -680,8 +715,8 @@ getDirectionDisplay	machine/ElevatorBank.java	/^	public int getDirectionDisplay(
 getDirectionDisplay	machine/RiderControls.java	/^    public int getDirectionDisplay(int elevator);$/;"	m	interface:RiderControls
 getDouble	machine/Config.java	/^    public static double getDouble(String key) {$/;"	m	class:Config
 getDouble	machine/Config.java	/^    public static double getDouble(String key, double defaultValue) {$/;"	m	class:Config
-getEffectivePriority	threads/PriorityScheduler.java	/^	public int getEffectivePriority() {$/;"	m	class:PriorityScheduler.ThreadState
-getEffectivePriority	threads/PriorityScheduler.java	/^    public int getEffectivePriority(KThread thread) {$/;"	m	class:PriorityScheduler
+getEffectivePriority	threads/PriorityScheduler.java	/^    public int getEffectivePriority() {$/;"	m	class:PriorityScheduler.ThreadState
+getEffectivePriority	threads/PriorityScheduler.java	/^  public int getEffectivePriority(KThread thread) {$/;"	m	class:PriorityScheduler
 getEffectivePriority	threads/Scheduler.java	/^    public int getEffectivePriority() {$/;"	m	class:Scheduler
 getEffectivePriority	threads/Scheduler.java	/^    public int getEffectivePriority(KThread thread) {$/;"	m	class:Scheduler
 getEntryPoint	machine/Coff.java	/^    public int getEntryPoint() {$/;"	m	class:Coff
@@ -723,11 +758,13 @@ getNumFloors	machine/ElevatorControls.java	/^    public int getNumFloors();$/;"	
 getNumFloors	machine/RiderControls.java	/^    public int getNumFloors();$/;"	m	interface:RiderControls
 getNumPhysPages	machine/Processor.java	/^    public int getNumPhysPages() {$/;"	m	class:Processor
 getNumSections	machine/Coff.java	/^    public int getNumSections() {$/;"	m	class:Coff
+getNumberOfAdults	threads/Boat.java	/^  static int getNumberOfAdults(Island current) {$/;"	m	class:Boat
+getNumberOfChildren	threads/Boat.java	/^  static int getNumberOfChildren(Island current) {$/;"	m	class:Boat
 getPageTable	machine/Processor.java	/^    public TranslationEntry[] getPageTable() {$/;"	m	class:Processor
 getPreferredSize	machine/ElevatorGui.java	/^	public Dimension getPreferredSize() {$/;"	m	class:ElevatorGui.ElevatorShaft
 getPreferredSize	machine/ElevatorGui.java	/^	public Dimension getPreferredSize() {$/;"	m	class:ElevatorGui.Floor
-getPriority	threads/PriorityScheduler.java	/^	public int getPriority() {$/;"	m	class:PriorityScheduler.ThreadState
-getPriority	threads/PriorityScheduler.java	/^    public int getPriority(KThread thread) {$/;"	m	class:PriorityScheduler
+getPriority	threads/PriorityScheduler.java	/^    public int getPriority() {$/;"	m	class:PriorityScheduler.ThreadState
+getPriority	threads/PriorityScheduler.java	/^  public int getPriority(KThread thread) {$/;"	m	class:PriorityScheduler
 getPriority	threads/Scheduler.java	/^    public int getPriority() {$/;"	m	class:Scheduler
 getPriority	threads/Scheduler.java	/^    public int getPriority(KThread thread) {$/;"	m	class:Scheduler
 getPrivilege	security/NachosSecurityManager.java	/^    public Privilege getPrivilege() {$/;"	m	class:NachosSecurityManager
@@ -740,9 +777,11 @@ getString	machine/Config.java	/^    public static String getString(String key, S
 getStringArgument	ag/AutoGrader.java	/^    String getStringArgument(String key) {$/;"	m	class:AutoGrader
 getTLBSize	machine/Processor.java	/^    public int getTLBSize() {$/;"	m	class:Processor
 getThreadGroup	security/NachosSecurityManager.java	/^    public ThreadGroup getThreadGroup() {$/;"	m	class:NachosSecurityManager
-getThreadState	threads/PriorityScheduler.java	/^    protected ThreadState getThreadState(KThread thread) {$/;"	m	class:PriorityScheduler
+getThreadState	threads/PriorityScheduler.java	/^  protected ThreadState getThreadState(KThread thread) {$/;"	m	class:PriorityScheduler
 getTime	ag/AutoGrader.java	/^    long getTime() {$/;"	m	class:AutoGrader
 getTime	machine/Timer.java	/^    public long getTime() {$/;"	m	class:Timer
+getTotalNumberOfPeople	threads/Boat.java	/^  static int getTotalNumberOfPeople(Island current) {$/;"	m	class:Boat
+getWaitTime	threads/PriorityScheduler.java	/^    public long getWaitTime() {$/;"	m	class:PriorityScheduler.ThreadState
 getc	test/stdio.h	21;"	d
 getch	test/stdio.h	23;"	d
 getchar	test/stdio.h	22;"	d
@@ -777,7 +816,7 @@ inElevator	machine/ElevatorBank.java	/^	boolean inElevator = false, finished = f
 incomingBytes	machine/NetworkLink.java	/^    private byte[] incomingBytes = null;$/;"	f	class:NetworkLink	file:
 incomingKey	machine/StandardConsole.java	/^    private int incomingKey = -1;$/;"	f	class:StandardConsole	file:
 incomingPacket	machine/NetworkLink.java	/^    private Packet incomingPacket = null;$/;"	f	class:NetworkLink	file:
-increasePriority	threads/PriorityScheduler.java	/^    public boolean increasePriority() {$/;"	m	class:PriorityScheduler
+increasePriority	threads/PriorityScheduler.java	/^  public boolean increasePriority() {$/;"	m	class:PriorityScheduler
 increasePriority	threads/Scheduler.java	/^    public boolean increasePriority() {$/;"	m	class:Scheduler
 init	ag/AutoGrader.java	/^    void init() {$/;"	m	class:AutoGrader
 init	machine/ElevatorBank.java	/^    public void init(int numElevators, int numFloors,$/;"	m	class:ElevatorBank
@@ -811,6 +850,9 @@ interrupt	machine/Machine.java	/^    public static Interrupt interrupt() { retur
 interrupt	machine/TCB.java	/^    private synchronized void interrupt() {$/;"	m	class:TCB	file:
 interrupt	security/Privilege.java	/^    public InterruptPrivilege interrupt = null;$/;"	f	class:Privilege
 invokeExitNotificationHandlers	security/Privilege.java	/^    protected void invokeExitNotificationHandlers() {$/;"	m	class:Privilege
+isBoatHere	threads/Boat.java	/^  static boolean isBoatHere(Island current) {$/;"	m	class:Boat
+isBoatValid	threads/Boat.java	/^  private static boolean isBoatValid(Person p) {$/;"	m	class:Boat	file:
+isDone	threads/Boat.java	/^  static boolean isDone() { \/\/ assume correct for now$/;"	m	class:Boat
 isFirstTCB	machine/TCB.java	/^    private boolean isFirstTCB;$/;"	f	class:TCB	file:
 isHeldByCurrentThread	threads/Lock.java	/^    public boolean isHeldByCurrentThread() {$/;"	m	class:Lock
 isInitialzed	machine/CoffSection.java	/^    public boolean isInitialzed() {$/;"	m	class:CoffSection
@@ -821,10 +863,13 @@ javaThread	machine/TCB.java	/^    private Thread javaThread = null;$/;"	f	class:
 join	machine/ElevatorBank.java	/^	void join() {$/;"	m	class:ElevatorBank.ElevatorManager
 join	machine/ElevatorBank.java	/^	void join() {$/;"	m	class:ElevatorBank.RiderState
 join	threads/KThread.java	/^  public void join() {$/;"	m	class:KThread
+joinQueue	threads/KThread.java	/^  private ThreadQueue joinQueue = ThreadedKernel.scheduler.newThreadQueue(true);$/;"	f	class:KThread	file:
 jtarget	machine/Processor.java	/^	int addr, nextPC, jtarget, dstReg;$/;"	f	class:Processor.Instruction
 kernel	ag/AutoGrader.java	/^    Kernel kernel;$/;"	f	class:AutoGrader
 kernel	machine/Kernel.java	/^    public static Kernel kernel = null;$/;"	f	class:Kernel
 kernelTicks	machine/Stats.java	/^    public long kernelTicks = 0;$/;"	f	class:Stats
+l	threads/Boat.java	/^  static Lock l = new Lock();$/;"	f	class:Boat
+l2	threads/Boat.java	/^  static Lock l2 = new Lock();$/;"	f	class:Boat
 lastTimerInterrupt	machine/Timer.java	/^    private long lastTimerInterrupt;$/;"	f	class:Timer	file:
 length	machine/ArrayFile.java	/^    public int length() {$/;"	m	class:ArrayFile
 length	machine/OpenFile.java	/^    public int length() {$/;"	m	class:OpenFile
@@ -833,9 +878,12 @@ level	ag/AutoGrader.java	/^    private int level = 0, targetLevel = 0;$/;"	f	cla
 level	ag/AutoGrader.java	/^    void level(int level) {$/;"	m	class:AutoGrader
 linkAddress	machine/NetworkLink.java	/^    private byte linkAddress;$/;"	f	class:NetworkLink	file:
 linkAddressLimit	machine/Packet.java	/^    public static final int linkAddressLimit = 128;$/;"	f	class:Packet
-list	threads/SynchList.java	/^    private LinkedList<Object> list;$/;"	f	class:SynchList	file:
-listEmpty	threads/SynchList.java	/^    private Condition listEmpty;$/;"	f	class:SynchList	file:
+list	threads/SynchList.java	/^  private LinkedList<Object> list;$/;"	f	class:SynchList	file:
+listEmpty	threads/SynchList.java	/^  private Condition2 listEmpty;$/;"	f	class:SynchList	file:
 listen	threads/Communicator.java	/^    public int listen() {$/;"	m	class:Communicator
+listenCond	threads/Communicator.java	/^    private Condition2 listenCond;$/;"	f	class:Communicator	file:
+listener	threads/Communicator.java	/^	private Communicator listener;$/;"	f	class:Communicator.ListenTest	file:
+listenersWaiting	threads/Communicator.java	/^    private int listenersWaiting; $/;"	f	class:Communicator	file:
 load	machine/Config.java	/^    public static void load(String fileName) {$/;"	m	class:Config
 load	userprog/UserProcess.java	/^    private boolean load(String name, String[] args) {$/;"	m	class:UserProcess	file:
 loadClass	machine/Lib.java	/^    public static Class loadClass(String className) {$/;"	m	class:Lib
@@ -849,8 +897,11 @@ loadTarget	machine/Processor.java	/^    private int loadTarget = 0;$/;"	f	class:
 loadValue	machine/Processor.java	/^    private int loadValue;$/;"	f	class:Processor	file:
 loaded	machine/Config.java	/^    private static boolean loaded = false;$/;"	f	class:Config	file:
 localHost	machine/NetworkLink.java	/^    private InetAddress localHost;$/;"	f	class:NetworkLink	file:
-lock	threads/SynchList.java	/^    private Lock lock;$/;"	f	class:SynchList	file:
+lock	threads/Communicator.java	/^    private Lock lock;$/;"	f	class:Communicator	file:
+lock	threads/SynchList.java	/^  private Lock lock;$/;"	f	class:SynchList	file:
 lockHolder	threads/Lock.java	/^    private KThread lockHolder = null;$/;"	f	class:Lock	file:
+mAdults	threads/Boat.java	/^  static Semaphore mAdults = new Semaphore(1);$/;"	f	class:Boat
+mChildren	threads/Boat.java	/^  static Semaphore mChildren = new Semaphore(1);$/;"	f	class:Boat
 machine	Makefile	/^machine =	Lib Config Stats Machine TCB \\$/;"	m
 machine	security/Privilege.java	/^    public MachinePrivilege machine = null;$/;"	f	class:Privilege
 main	machine/Machine.java	/^    public static void main(final String[] args) {$/;"	m	class:Machine
@@ -878,13 +929,17 @@ maxThreads	machine/TCB.java	/^    public static final int maxThreads = 250;$/;"	
 mcharprint	test/printf.c	/^static int mcharprint(char **s, char* chars, int length) {$/;"	f	file:
 memcpy	test/memcpy.c	/^void *memcpy(void *s1, const void *s2, unsigned n) {$/;"	f
 memset	test/memset.c	/^void *memset(void *s, int c, unsigned int n) {$/;"	f
+message	threads/Communicator.java	/^    private int message;$/;"	f	class:Communicator	file:
 messageReceived	network/PostOffice.java	/^    private Semaphore messageReceived;	\/\/ V'd when a message can be dequeued$/;"	f	class:PostOffice	file:
 messageSent	network/PostOffice.java	/^    private Semaphore messageSent;	\/\/ V'd when a message can be queued$/;"	f	class:PostOffice	file:
 min	test/stdlib.h	16;"	d
+molokaiAdults	threads/Boat.java	/^  static int molokaiAdults = 0;$/;"	f	class:Boat
+molokaiChildren	threads/Boat.java	/^  static int molokaiChildren = 0;$/;"	f	class:Boat
 moveTo	machine/ElevatorBank.java	/^	boolean moveTo(int newDestination) {$/;"	m	class:ElevatorBank.ElevatorState
 moveTo	machine/ElevatorBank.java	/^	public boolean moveTo(int floor, int elevator) {$/;"	m	class:ElevatorBank.ElevatorManager
 moveTo	machine/ElevatorControls.java	/^    public boolean moveTo(int floor, int elevator);$/;"	m	interface:ElevatorControls
 moving	machine/ElevatorBank.java	/^	boolean doorsOpen = false, moving = false;$/;"	f	class:ElevatorBank.ElevatorState
+n	threads/PriorityScheduler.java	/^    private int n;$/;"	f	class:PriorityScheduler.FooTest	file:
 nachos.ag	ag/AutoGrader.java	/^package nachos.ag;$/;"	p
 nachos.ag	ag/BoatGrader.java	/^package nachos.ag;$/;"	p
 nachos.machine	machine/ArrayFile.java	/^package nachos.machine;$/;"	p
@@ -960,13 +1015,13 @@ networkID	machine/NetworkLink.java	/^    public static final byte networkID;$/;"
 networkLink	machine/Machine.java	/^    private static NetworkLink networkLink = null;$/;"	f	class:Machine	file:
 networkLink	machine/Machine.java	/^    public static NetworkLink networkLink() { return networkLink; }$/;"	m	class:Machine
 newThreadQueue	threads/LotteryScheduler.java	/^    public ThreadQueue newThreadQueue(boolean transferPriority) {$/;"	m	class:LotteryScheduler
-newThreadQueue	threads/PriorityScheduler.java	/^    public ThreadQueue newThreadQueue(boolean transferPriority) {$/;"	m	class:PriorityScheduler
+newThreadQueue	threads/PriorityScheduler.java	/^  public ThreadQueue newThreadQueue(boolean transferPriority) {$/;"	m	class:PriorityScheduler
 newThreadQueue	threads/RoundRobinScheduler.java	/^    public ThreadQueue newThreadQueue(boolean transferPriority) {$/;"	m	class:RoundRobinScheduler
 newThreadQueue	threads/Scheduler.java	/^    public abstract ThreadQueue newThreadQueue(boolean transferPriority);$/;"	m	class:Scheduler
 newUserProcess	userprog/UserProcess.java	/^    public static UserProcess newUserProcess() {$/;"	m	class:UserProcess
 nextETA	machine/ElevatorBank.java	/^	long nextETA;$/;"	f	class:ElevatorBank.ElevatorState
 nextPC	machine/Processor.java	/^	int addr, nextPC, jtarget, dstReg;$/;"	f	class:Processor.Instruction
-nextThread	threads/PriorityScheduler.java	/^	public KThread nextThread() {$/;"	m	class:PriorityScheduler.PriorityQueue
+nextThread	threads/PriorityScheduler.java	/^    public KThread nextThread() {$/;"	m	class:PriorityScheduler.PriorityQueue
 nextThread	threads/RoundRobinScheduler.java	/^	public KThread nextThread() {$/;"	m	class:RoundRobinScheduler.FifoQueue
 nextThread	threads/ThreadQueue.java	/^    public abstract KThread nextThread();$/;"	m	class:ThreadQueue
 no	security/NachosSecurityManager.java	/^    private void no() {$/;"	m	class:NachosSecurityManager	file:
@@ -994,6 +1049,10 @@ numRiders	machine/ElevatorGui.java	/^	int floor, numRiders;$/;"	f	class:Elevator
 numRiders	machine/ElevatorGui.java	/^	private int floor = 0, prevFloor = 0, numRiders = 0;$/;"	f	class:ElevatorGui.ElevatorShaft	file:
 numTLBMisses	machine/Stats.java	/^    public int numTLBMisses = 0;$/;"	f	class:Stats
 numUserRegisters	machine/Processor.java	/^    public static final int numUserRegisters = 38;$/;"	f	class:Processor
+oAdults	threads/Boat.java	/^  static Semaphore oAdults = new Semaphore(1);$/;"	f	class:Boat
+oChildren	threads/Boat.java	/^  static Semaphore oChildren = new Semaphore(1);$/;"	f	class:Boat
+oahuAdults	threads/Boat.java	/^  static int oahuAdults = 0;$/;"	f	class:Boat
+oahuChildren	threads/Boat.java	/^  static int oahuChildren = 0;$/;"	f	class:Boat
 offsetFromAddress	machine/Processor.java	/^    public static int offsetFromAddress(int address) {$/;"	m	class:Processor
 onexit	bin/nachos	/^onexit () {$/;"	f
 op	machine/Processor.java	/^	int value, op, rs, rt, rd, sh, func, target, imm;$/;"	f	class:Processor.Instruction
@@ -1014,6 +1073,7 @@ optable	machine/Processor.java	/^	static final Mips[] optable = {$/;"	f	class:Pr
 out	machine/StandardConsole.java	/^    protected void out(int value) {$/;"	m	class:StandardConsole
 outgoingKey	machine/StandardConsole.java	/^    private int outgoingKey = -1;$/;"	f	class:StandardConsole	file:
 outgoingPacket	machine/NetworkLink.java	/^    private Packet outgoingPacket = null;$/;"	f	class:NetworkLink	file:
+pStack	threads/PriorityScheduler.java	/^    public Stack<Integer> pStack = new Stack<Integer>();$/;"	f	class:PriorityScheduler.ThreadState
 packet	network/MailMessage.java	/^    public Packet packet;$/;"	f	class:MailMessage
 packetBytes	machine/Packet.java	/^    public byte[] packetBytes;$/;"	f	class:Packet
 pageFromAddress	machine/Processor.java	/^    public static int pageFromAddress(int address) {$/;"	m	class:Processor
@@ -1027,13 +1087,14 @@ paintButtons	machine/ElevatorGui.java	/^	private void paintButtons(Graphics g) {
 paintRider	machine/ElevatorGui.java	/^    private void paintRider(Graphics g, int x, int y, int r) {$/;"	m	class:ElevatorGui	file:
 paintRiders	machine/ElevatorGui.java	/^    private void paintRiders(Graphics g, int x, int y, int w, int h, int n) {$/;"	m	class:ElevatorGui	file:
 pending	machine/Interrupt.java	/^    private TreeSet<PendingInterrupt> pending;$/;"	f	class:Interrupt	file:
-pickNextThread	threads/PriorityScheduler.java	/^	protected ThreadState pickNextThread() {$/;"	m	class:PriorityScheduler.PriorityQueue
+peopleOnBoat	threads/Boat.java	/^  static Semaphore peopleOnBoat = new Semaphore(1);$/;"	f	class:Boat
+pickNextThread	threads/PriorityScheduler.java	/^    protected ThreadState pickNextThread() {$/;"	m	class:PriorityScheduler.PriorityQueue
 ping	network/NetKernel.java	/^    private void ping(int dstLink) {$/;"	m	class:NetKernel	file:
-ping	threads/Semaphore.java	/^	private Semaphore ping;$/;"	f	class:Semaphore.PingTest	file:
-ping	threads/SynchList.java	/^	private SynchList ping;$/;"	f	class:SynchList.PingTest	file:
+ping	threads/Semaphore.java	/^    private Semaphore ping;$/;"	f	class:Semaphore.PingTest	file:
+ping	threads/SynchList.java	/^    private SynchList ping;$/;"	f	class:SynchList.PingTest	file:
 pingServer	network/NetKernel.java	/^    private void pingServer() {$/;"	m	class:NetKernel	file:
-pong	threads/Semaphore.java	/^	private Semaphore pong;$/;"	f	class:Semaphore.PingTest	file:
-pong	threads/SynchList.java	/^	private SynchList pong;$/;"	f	class:SynchList.PingTest	file:
+pong	threads/Semaphore.java	/^    private Semaphore pong;$/;"	f	class:Semaphore.PingTest	file:
+pong	threads/SynchList.java	/^    private SynchList pong;$/;"	f	class:SynchList.PingTest	file:
 portBase	machine/NetworkLink.java	/^    private static final int portBase;$/;"	f	class:NetworkLink	file:
 portLimit	network/MailMessage.java	/^    public static final int portLimit = 128;$/;"	f	class:MailMessage
 position	machine/OpenFileWithPosition.java	/^    protected int position = 0;$/;"	f	class:OpenFileWithPosition
@@ -1061,14 +1122,18 @@ prevFloor	machine/ElevatorGui.java	/^	private int floor = 0, prevFloor = 0, numR
 print	machine/Interrupt.java	/^    private void print() {$/;"	m	class:Interrupt	file:
 print	machine/Processor.java	/^	private void print() {$/;"	m	class:Processor.Instruction	file:
 print	machine/Stats.java	/^    public void print() {$/;"	m	class:Stats
-print	threads/PriorityScheduler.java	/^	public void print() {$/;"	m	class:PriorityScheduler.PriorityQueue
+print	threads/PriorityScheduler.java	/^    public void print() {$/;"	m	class:PriorityScheduler.PriorityQueue
 print	threads/RoundRobinScheduler.java	/^	public void print() {$/;"	m	class:RoundRobinScheduler.FifoQueue
 print	threads/ThreadQueue.java	/^    public abstract void print();$/;"	m	class:ThreadQueue
+printThread	threads/Communicator.java	/^    public static void printThread() {$/;"	m	class:Communicator
+printThread	threads/Communicator.java	/^    public static void printThread(KThread thread) {$/;"	m	class:Communicator
+printThread	threads/Communicator.java	/^    public static void printThread(KThread thread, String message) {$/;"	m	class:Communicator
+printThread	threads/Communicator.java	/^    public static void printThread(String message) {$/;"	m	class:Communicator
 printf	test/printf.c	/^void printf(char *format, ...) {$/;"	f
-priority	threads/PriorityScheduler.java	/^	protected int priority;$/;"	f	class:PriorityScheduler.ThreadState
-priorityDefault	threads/PriorityScheduler.java	/^    public static final int priorityDefault = 1;$/;"	f	class:PriorityScheduler
-priorityMaximum	threads/PriorityScheduler.java	/^    public static final int priorityMaximum = 7;    $/;"	f	class:PriorityScheduler
-priorityMinimum	threads/PriorityScheduler.java	/^    public static final int priorityMinimum = 0;$/;"	f	class:PriorityScheduler
+priority	threads/PriorityScheduler.java	/^    protected int priority;$/;"	f	class:PriorityScheduler.ThreadState
+priorityDefault	threads/PriorityScheduler.java	/^  public static final int priorityDefault = 1;$/;"	f	class:PriorityScheduler
+priorityMaximum	threads/PriorityScheduler.java	/^  public static final int priorityMaximum = 7;$/;"	f	class:PriorityScheduler
+priorityMinimum	threads/PriorityScheduler.java	/^  public static final int priorityMinimum = 0;$/;"	f	class:PriorityScheduler
 privilege	ag/AutoGrader.java	/^    Privilege privilege = null;$/;"	f	class:AutoGrader
 privilege	machine/ElevatorBank.java	/^    private Privilege privilege;$/;"	f	class:ElevatorBank	file:
 privilege	machine/Interrupt.java	/^    private Privilege privilege;$/;"	f	class:Interrupt	file:
@@ -1149,10 +1214,11 @@ registers	machine/Processor.java	/^    private int registers[] = new int[numUser
 reject	machine/StubFileSystem.java	/^    private static void reject(char c) {$/;"	m	class:StubFileSystem	file:
 reject	machine/StubFileSystem.java	/^    private static void reject(char first, char last) {$/;"	m	class:StubFileSystem	file:
 release	threads/Lock.java	/^    public void release() {$/;"	m	class:Lock
+releaseJoined	threads/KThread.java	/^  public void releaseJoined() {$/;"	m	class:KThread
 reliability	machine/NetworkLink.java	/^    private double reliability;$/;"	f	class:NetworkLink	file:
 remove	machine/FileSystem.java	/^    public boolean remove(String name);$/;"	m	interface:FileSystem
 remove	machine/StubFileSystem.java	/^    public boolean remove(String name) {$/;"	m	class:StubFileSystem
-removeFirst	threads/SynchList.java	/^    public Object removeFirst() {$/;"	m	class:SynchList
+removeFirst	threads/SynchList.java	/^  public Object removeFirst() {$/;"	m	class:SynchList
 removeRider	machine/ElevatorGui.java	/^	void removeRider() {$/;"	m	class:ElevatorGui.ElevatorShaft
 removeRider	machine/ElevatorGui.java	/^	void removeRider() {$/;"	m	class:ElevatorGui.Floor
 repaint	machine/ElevatorGui.java	/^	public void repaint() {$/;"	m	class:ElevatorGui.Floor
@@ -1166,10 +1232,12 @@ restoreState	userprog/UThread.java	/^    protected void restoreState() {$/;"	m	c
 restoreState	userprog/UserProcess.java	/^    public void restoreState() {$/;"	m	class:UserProcess
 restoreState	vm/VMProcess.java	/^    public void restoreState() {$/;"	m	class:VMProcess
 rethrow	security/NachosSecurityManager.java	/^    private void rethrow(Throwable e) {$/;"	m	class:NachosSecurityManager	file:
+rideToOtherIsland	threads/Boat.java	/^  static Island rideToOtherIsland(Island current, Person p) {$/;"	m	class:Boat
 rider	machine/ElevatorBank.java	/^    	RiderInterface rider;$/;"	f	class:ElevatorBank.RiderState
 riders	machine/ElevatorBank.java	/^	public Vector<RiderState> riders = new Vector<RiderState>();$/;"	f	class:ElevatorBank.ElevatorState
 riders	machine/ElevatorBank.java	/^    private RiderState[] riders;$/;"	f	class:ElevatorBank	file:
 ridersVector	machine/ElevatorBank.java	/^    private Vector<RiderControls> ridersVector;$/;"	f	class:ElevatorBank	file:
+rowToOtherIsland	threads/Boat.java	/^  static Island rowToOtherIsland(Island current, Person p) {$/;"	m	class:Boat
 rs	machine/Processor.java	/^	int value, op, rs, rt, rd, sh, func, target, imm;$/;"	f	class:Processor.Instruction
 rt	machine/Processor.java	/^	int value, op, rs, rt, rd, sh, func, target, imm;$/;"	f	class:Processor.Instruction
 run	ag/AutoGrader.java	/^    void run() {$/;"	m	class:AutoGrader
@@ -1186,13 +1254,19 @@ run	machine/Processor.java	/^    public void run() {$/;"	m	class:Processor
 run	machine/RiderInterface.java	/^    public void run();$/;"	m	interface:RiderInterface
 run	machine/StubFileSystem.java	/^	public void run() {$/;"	m	class:StubFileSystem.FileRemover
 run	network/NetKernel.java	/^    public void run() {$/;"	m	class:NetKernel
+run	threads/Communicator.java	/^	public void run() {$/;"	m	class:Communicator.ListenTest
+run	threads/Communicator.java	/^	public void run() {$/;"	m	class:Communicator.SpeakTest
 run	threads/ElevatorController.java	/^    public void run() {$/;"	m	class:ElevatorController
 run	threads/KThread.java	/^    public void run() {$/;"	m	class:KThread.JoinTest
 run	threads/KThread.java	/^    public void run() {$/;"	m	class:KThread.PingTest
 run	threads/KThread.java	/^  private void run() {$/;"	m	class:KThread	file:
+run	threads/PriorityScheduler.java	/^    public void run() {$/;"	m	class:PriorityScheduler.FooTest
+run	threads/PriorityScheduler.java	/^    public void run() {$/;"	m	class:PriorityScheduler.ThreadATest
+run	threads/PriorityScheduler.java	/^    public void run() {$/;"	m	class:PriorityScheduler.ThreadBTest
+run	threads/PriorityScheduler.java	/^    public void run() {$/;"	m	class:PriorityScheduler.ThreadCTest
 run	threads/Rider.java	/^    public void run() {$/;"	m	class:Rider
-run	threads/Semaphore.java	/^	public void run() {$/;"	m	class:Semaphore.PingTest
-run	threads/SynchList.java	/^	public void run() {$/;"	m	class:SynchList.PingTest
+run	threads/Semaphore.java	/^    public void run() {$/;"	m	class:Semaphore.PingTest
+run	threads/SynchList.java	/^    public void run() {$/;"	m	class:SynchList.PingTest
 run	threads/ThreadedKernel.java	/^    public void run() {$/;"	m	class:ThreadedKernel
 run	userprog/UserKernel.java	/^    public void run() {$/;"	m	class:UserKernel
 run	vm/VMKernel.java	/^    public void run() {$/;"	m	class:VMKernel
@@ -1205,6 +1279,7 @@ running	machine/TCB.java	/^    private boolean running = false;$/;"	f	class:TCB	
 runningThread	ag/AutoGrader.java	/^    public void runningThread(KThread thread) {$/;"	m	class:AutoGrader
 runningThreads	machine/TCB.java	/^    private static Vector<TCB> runningThreads = new Vector<TCB>();$/;"	f	class:TCB	file:
 s	machine/ElevatorGui.java	/^	private static final int s = 5;$/;"	f	class:ElevatorGui.ElevatorShaft	file:
+s	threads/PriorityScheduler.java	/^    private String s;$/;"	f	class:PriorityScheduler.FooTest	file:
 saveState	threads/KThread.java	/^  protected void saveState() {$/;"	m	class:KThread
 saveState	userprog/UThread.java	/^    protected void saveState() {$/;"	m	class:UThread
 saveState	userprog/UserProcess.java	/^    public void saveState() {$/;"	m	class:UserProcess
@@ -1231,10 +1306,12 @@ seek	machine/OpenFileWithPosition.java	/^    public void seek(int position) {$/;
 selfTest	machine/ElevatorBank.java	/^    public static void selfTest() {$/;"	m	class:ElevatorBank
 selfTest	machine/Kernel.java	/^    public abstract void selfTest();$/;"	m	class:Kernel
 selfTest	network/NetKernel.java	/^    public void selfTest() {$/;"	m	class:NetKernel
-selfTest	threads/Boat.java	/^    public static void selfTest()$/;"	m	class:Boat
+selfTest	threads/Boat.java	/^  public static void selfTest()$/;"	m	class:Boat
+selfTest	threads/Communicator.java	/^    public static void selfTest() {$/;"	m	class:Communicator
 selfTest	threads/KThread.java	/^  public static void selfTest() {$/;"	m	class:KThread
-selfTest	threads/Semaphore.java	/^    public static void selfTest() {$/;"	m	class:Semaphore
-selfTest	threads/SynchList.java	/^    public static void selfTest() {$/;"	m	class:SynchList
+selfTest	threads/PriorityScheduler.java	/^  public static void selfTest() {$/;"	m	class:PriorityScheduler
+selfTest	threads/Semaphore.java	/^  public static void selfTest() {$/;"	m	class:Semaphore
+selfTest	threads/SynchList.java	/^  public static void selfTest() {$/;"	m	class:SynchList
 selfTest	threads/ThreadedKernel.java	/^    public void selfTest() {$/;"	m	class:ThreadedKernel
 selfTest	userprog/UserKernel.java	/^    public void selfTest() {$/;"	m	class:UserKernel
 selfTest	vm/VMKernel.java	/^    public void selfTest() {$/;"	m	class:VMKernel
@@ -1257,6 +1334,7 @@ setDirectionDisplay	machine/ElevatorBank.java	/^	public void setDirectionDisplay
 setDirectionDisplay	machine/ElevatorControls.java	/^    public void setDirectionDisplay(int elevator, int direction);$/;"	m	interface:ElevatorControls
 setDirectionDisplay	machine/ElevatorGui.java	/^	void setDirectionDisplay(int direction) {$/;"	m	class:ElevatorGui.ElevatorShaft
 setDirectionDisplay	machine/ElevatorGui.java	/^    void setDirectionDisplay(int elevator, int direction) {$/;"	m	class:ElevatorGui
+setEffectivePriority	threads/PriorityScheduler.java	/^    public void setEffectivePriority(int priority) {$/;"	m	class:PriorityScheduler.ThreadState
 setExceptionHandler	machine/Processor.java	/^    public void setExceptionHandler(Runnable exceptionHandler) {$/;"	m	class:Processor
 setIdleThread	ag/AutoGrader.java	/^    public void setIdleThread(KThread idleThread) {$/;"	m	class:AutoGrader
 setInterruptHandler	machine/ElevatorBank.java	/^	public void setInterruptHandler(Runnable handler) {$/;"	m	class:ElevatorBank.ElevatorManager
@@ -1269,8 +1347,8 @@ setInterruptHandlers	machine/SerialConsole.java	/^    public void setInterruptHa
 setInterruptHandlers	machine/StandardConsole.java	/^    public final void setInterruptHandlers(Runnable receiveInterruptHandler,$/;"	m	class:StandardConsole
 setName	threads/KThread.java	/^  public KThread setName(String name) {$/;"	m	class:KThread
 setPageTable	machine/Processor.java	/^    public void setPageTable(TranslationEntry[] pageTable) {$/;"	m	class:Processor
-setPriority	threads/PriorityScheduler.java	/^	public void setPriority(int priority) {$/;"	m	class:PriorityScheduler.ThreadState
-setPriority	threads/PriorityScheduler.java	/^    public void setPriority(KThread thread, int priority) {$/;"	m	class:PriorityScheduler
+setPriority	threads/PriorityScheduler.java	/^    public void setPriority(int priority) {$/;"	m	class:PriorityScheduler.ThreadState
+setPriority	threads/PriorityScheduler.java	/^  public void setPriority(KThread thread, int priority) {$/;"	m	class:PriorityScheduler
 setPriority	threads/Scheduler.java	/^    public void setPriority(KThread thread, int priority) {$/;"	m	class:Scheduler
 setPriority	threads/Scheduler.java	/^    public void setPriority(int priority) {$/;"	m	class:Scheduler
 setStatus	machine/Interrupt.java	/^    public boolean setStatus(boolean status) {$/;"	m	class:Interrupt
@@ -1280,11 +1358,14 @@ shellProgramName	machine/Machine.java	/^    private static String shellProgramNa
 simulationStarted	machine/ElevatorBank.java	/^    private boolean simulationStarted, enableGui;$/;"	f	class:ElevatorBank	file:
 size	machine/CoffSection.java	/^    private int contentOffset, size;$/;"	f	class:CoffSection	file:
 size	machine/Processor.java	/^	int size;$/;"	f	class:Processor.Instruction
-sleep	threads/Condition.java	/^    public void sleep() {$/;"	m	class:Condition
-sleep	threads/Condition2.java	/^    public void sleep() {$/;"	m	class:Condition2
+sleep	threads/Condition.java	/^  public void sleep() {$/;"	m	class:Condition
+sleep	threads/Condition2.java	/^  public void sleep() { \/\/ waitQueue.waitForAccess(KThread.currentThread());$/;"	m	class:Condition2
 sleep	threads/KThread.java	/^  public static void sleep() {$/;"	m	class:KThread
 socket	machine/NetworkLink.java	/^    private DatagramSocket socket;$/;"	f	class:NetworkLink	file:
-speak	threads/Communicator.java	/^    public void speak(int word) {$/;"	m	class:Communicator
+speak	threads/Communicator.java	/^    public void speak(int word) { $/;"	m	class:Communicator
+speakCond	threads/Communicator.java	/^    private Condition2 speakCond;$/;"	f	class:Communicator	file:
+speaker	threads/Communicator.java	/^	private Communicator speaker;$/;"	f	class:Communicator.SpeakTest	file:
+speakersWaiting	threads/Communicator.java	/^    private int speakersWaiting; $/;"	f	class:Communicator	file:
 specialtable	machine/Processor.java	/^	static final Mips[] specialtable = {$/;"	f	class:Processor.Mips
 sprintf	test/printf.c	/^void sprintf(char *s, char *format, ...) {$/;"	f
 src1	machine/Processor.java	/^	long src1, src2, dst;$/;"	f	class:Processor.Instruction
@@ -1364,9 +1445,11 @@ test	machine/Processor.java	/^	private boolean test(int flag) {$/;"	m	class:Proc
 testArgs	ag/AutoGrader.java	/^    private Hashtable<String, String> testArgs = $/;"	f	class:AutoGrader	file:
 testDirectory	machine/Machine.java	/^    private static File baseDirectory, nachosDirectory, testDirectory;$/;"	f	class:Machine	file:
 testDirectory	security/NachosSecurityManager.java	/^    private File testDirectory;$/;"	f	class:NachosSecurityManager	file:
+testLock	threads/PriorityScheduler.java	/^    private Lock testLock;$/;"	f	class:PriorityScheduler.ThreadATest	file:
+testLock	threads/PriorityScheduler.java	/^    private Lock testLock;$/;"	f	class:PriorityScheduler.ThreadBTest	file:
 thread	machine/ElevatorBank.java	/^	KThread thread;$/;"	f	class:ElevatorBank.ElevatorManager
 thread	machine/ElevatorBank.java	/^	KThread thread;$/;"	f	class:ElevatorBank.RiderState
-thread	threads/PriorityScheduler.java	/^	protected KThread thread;$/;"	f	class:PriorityScheduler.ThreadState
+thread	threads/PriorityScheduler.java	/^    protected KThread thread;$/;"	f	class:PriorityScheduler.ThreadState
 threadroot	machine/TCB.java	/^    private void threadroot() {$/;"	m	class:TCB	file:
 threads	Makefile	/^threads =	ThreadedKernel KThread Alarm \\$/;"	m
 tick	machine/Interrupt.java	/^	public void tick(boolean inKernelMode) {$/;"	m	class:Interrupt.InterruptPrivilege
@@ -1387,11 +1470,14 @@ toHexString	machine/Lib.java	/^    public static String toHexString(int i) {$/;"
 toHexString	machine/Lib.java	/^    public static String toHexString(int i, int pad) {$/;"	m	class:Lib
 toString	network/MailMessage.java	/^    public String toString() {$/;"	m	class:MailMessage
 toString	threads/KThread.java	/^  public String toString() {$/;"	m	class:KThread
+toString	threads/PriorityScheduler.java	/^    public String toString() {$/;"	m	class:PriorityScheduler.ThreadState
 tokenizeCommand	test/sh.c	/^static int tokenizeCommand(char* command, int maxTokens, char *tokens[], char* storage) {$/;"	f	file:
+totalAdults	threads/Boat.java	/^  static int totalAdults;$/;"	f	class:Boat
+totalChildren	threads/Boat.java	/^  static int totalChildren;$/;"	f	class:Boat
 totalHeight	machine/ElevatorGui.java	/^    private int totalWidth, totalHeight;$/;"	f	class:ElevatorGui	file:
 totalTicks	machine/Stats.java	/^    public long totalTicks = 0;$/;"	f	class:Stats
 totalWidth	machine/ElevatorGui.java	/^    private int totalWidth, totalHeight;$/;"	f	class:ElevatorGui	file:
-transferPriority	threads/PriorityScheduler.java	/^	public boolean transferPriority;$/;"	f	class:PriorityScheduler.PriorityQueue
+transferPriority	threads/PriorityScheduler.java	/^    public boolean transferPriority;$/;"	f	class:PriorityScheduler.PriorityQueue
 translate	machine/Processor.java	/^    private int translate(int vaddr, int size, boolean writing)$/;"	m	class:Processor	file:
 translateCharacter	machine/StandardConsole.java	/^    private int translateCharacter(int c) {$/;"	m	class:StandardConsole	file:
 translations	machine/Processor.java	/^    private TranslationEntry[] translations;$/;"	f	class:Processor	file:
@@ -1433,7 +1519,7 @@ va_start	test/va-mips.h	163;"	d
 va_start	test/va-mips.h	96;"	d
 valid	machine/TranslationEntry.java	/^    public boolean valid;$/;"	f	class:TranslationEntry
 value	machine/Processor.java	/^	int value, op, rs, rt, rd, sh, func, target, imm;$/;"	f	class:Processor.Instruction
-value	threads/Semaphore.java	/^    private int value;$/;"	f	class:Semaphore	file:
+value	threads/Semaphore.java	/^  private int value;$/;"	f	class:Semaphore	file:
 verifyPrivilege	security/NachosSecurityManager.java	/^    public void verifyPrivilege() {$/;"	m	class:NachosSecurityManager
 verifyPrivilege	security/NachosSecurityManager.java	/^    public void verifyPrivilege(Permission perm) {$/;"	m	class:NachosSecurityManager
 vfprintf	test/printf.c	/^void vfprintf(int fd, char *format, va_list ap) {$/;"	f
@@ -1443,22 +1529,27 @@ vpn	machine/TranslationEntry.java	/^    public int vpn;$/;"	f	class:TranslationE
 vprintf	test/printf.c	/^void vprintf(char *format, va_list ap) {$/;"	f
 vsprintf	test/printf.c	/^void vsprintf(char *s, char *format, va_list ap) {$/;"	f
 w	machine/ElevatorGui.java	/^    private final static int w=90, h=75;$/;"	f	class:ElevatorGui	file:
-waitForAccess	threads/PriorityScheduler.java	/^	public void waitForAccess(KThread thread) {$/;"	m	class:PriorityScheduler.PriorityQueue
-waitForAccess	threads/PriorityScheduler.java	/^	public void waitForAccess(PriorityQueue waitQueue) {$/;"	m	class:PriorityScheduler.ThreadState
+waitForAccess	threads/PriorityScheduler.java	/^    public void waitForAccess(KThread thread) {$/;"	m	class:PriorityScheduler.PriorityQueue
+waitForAccess	threads/PriorityScheduler.java	/^    public void waitForAccess(PriorityQueue waitQueue) {$/;"	m	class:PriorityScheduler.ThreadState
 waitForAccess	threads/RoundRobinScheduler.java	/^	public void waitForAccess(KThread thread) {$/;"	m	class:RoundRobinScheduler.FifoQueue
 waitForAccess	threads/ThreadQueue.java	/^    public abstract void waitForAccess(KThread thread);$/;"	m	class:ThreadQueue
 waitForInterrupt	machine/TCB.java	/^    private synchronized void waitForInterrupt() {$/;"	m	class:TCB	file:
-waitQueue	threads/Condition.java	/^    private LinkedList<Semaphore> waitQueue;$/;"	f	class:Condition	file:
+waitForRower	threads/Boat.java	/^  static Semaphore waitForRower = new Semaphore(0);$/;"	f	class:Boat
+waitQueue	threads/Condition.java	/^  private LinkedList<Semaphore> waitQueue;$/;"	f	class:Condition	file:
+waitQueue	threads/Condition2.java	/^  private ThreadQueue waitQueue = ThreadedKernel.scheduler.newThreadQueue(false);$/;"	f	class:Condition2	file:
 waitQueue	threads/Lock.java	/^    private ThreadQueue waitQueue =$/;"	f	class:Lock	file:
+waitQueue	threads/PriorityScheduler.java	/^    private java.util.PriorityQueue<ThreadState> waitQueue = new java.util.PriorityQueue<ThreadState>(11, new ThreadComparator());$/;"	f	class:PriorityScheduler.PriorityQueue	file:
 waitQueue	threads/RoundRobinScheduler.java	/^	private LinkedList<KThread> waitQueue = new LinkedList<KThread>();$/;"	f	class:RoundRobinScheduler.FifoQueue	file:
-waitQueue	threads/Semaphore.java	/^    private ThreadQueue waitQueue =$/;"	f	class:Semaphore	file:
+waitQueue	threads/Semaphore.java	/^  private ThreadQueue waitQueue =$/;"	f	class:Semaphore	file:
+waitTime	threads/PriorityScheduler.java	/^    protected long waitTime;$/;"	f	class:PriorityScheduler.ThreadState
 waitUntil	threads/Alarm.java	/^    public void waitUntil(long x) {$/;"	m	class:Alarm
-wake	threads/Condition.java	/^    public void wake() {$/;"	m	class:Condition
-wake	threads/Condition2.java	/^    public void wake() {$/;"	m	class:Condition2
-wakeAll	threads/Condition.java	/^    public void wakeAll() {$/;"	m	class:Condition
-wakeAll	threads/Condition2.java	/^    public void wakeAll() {$/;"	m	class:Condition2
+wake	threads/Condition.java	/^  public void wake() {$/;"	m	class:Condition
+wake	threads/Condition2.java	/^  public void wake() {$/;"	m	class:Condition2
+wakeAll	threads/Condition.java	/^  public void wakeAll() {$/;"	m	class:Condition
+wakeAll	threads/Condition2.java	/^  public void wakeAll() {$/;"	m	class:Condition2
 which	threads/KThread.java	/^    private int which;$/;"	f	class:KThread.JoinTest	file:
 which	threads/KThread.java	/^    private int which;$/;"	f	class:KThread.PingTest	file:
+word	threads/Communicator.java	/^	private int word;$/;"	f	class:Communicator.SpeakTest	file:
 write	machine/ArrayFile.java	/^    public int write(int position, byte[] buf, int offset, int length) {$/;"	m	class:ArrayFile
 write	machine/OpenFile.java	/^    public int write(byte[] buf, int offset, int length) {$/;"	m	class:OpenFile
 write	machine/OpenFile.java	/^    public int write(int pos, byte[] buf, int offset, int length) {$/;"	m	class:OpenFile
