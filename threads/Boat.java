@@ -125,6 +125,51 @@ public class Boat
 
     Person personType = Person.CHILD;
     Island currentIsland = Island.OAHU;
+
+    // if the boat isn't here we can't do anything
+    if(!isBoatHere()) {
+      KThread.currentThread().yield();
+    }
+    // TODO we need to acquire a condition variable for the boat here
+    // TODO we need to acquire a condition variable for the boatPeople here
+
+    if(boatPeople.isEmpty()) {
+      currentIsland = rowToOtherIsland(currentIsland, personType);
+    } else if(isBoatValid(personType)) {
+      currentIsland = rideToOtherIsland(currentIsland, personType);
+    } // TODO we need to sleep on some condition variable here
+  }
+
+  static Island rideToOtherIsland(Island current, Person p) {
+    if(current == Island.OAHU) {
+      if (p == Person.CHILD) {
+        childRideToMolokai();
+      }
+      return Island.MOLOKAI;
+    } else { // current island is Molokai
+      if (p == Person.CHILD) {
+        childRideToOahu();
+      }
+      return Island.OAHU;
+    }
+  }
+
+  static Island rowToOtherIsland(Island current, Person p) {
+    if(current == Island.OAHU) {
+      if (p == Person.CHILD) {
+        childRowToMolokai();
+      } else { // p is an adult
+        adultRowToMolokai();
+      }
+      return Island.MOLOKAI;
+    } else { // current island is Molokai
+      if (p == Person.CHILD) {
+        childRowToOahu();
+      } else { // p is an adult
+        adultRowToOahu();
+      }
+      return Island.OAHU;
+    }
   }
 
   static boolean isDone() { // assume correct for now
@@ -152,7 +197,7 @@ public class Boat
     }
   }
 
-  private static void AdultRowToMolokai() {
+  private static void adultRowToMolokai() {
     oahuAdults -= 1;
     molokaiAdults += 1;
 
@@ -160,7 +205,7 @@ public class Boat
     bg.AdultRowToMolokai();
   }
 
-  private static void ChildrenRowToMolokai() {
+  private static void childRowToMolokai() {
     oahuChildren -= 1;
     molokaiChildren += 1;
 
@@ -168,7 +213,7 @@ public class Boat
     bg.ChildRowToMolokai();
   }
 
-  private static void ChildrenRideToMolokai() {
+  private static void childRideToMolokai() {
     oahuChildren -= 1;
     molokaiChildren += 1;
 
@@ -176,7 +221,7 @@ public class Boat
   }
 
   // this may be superfluous
-  private static void AdultRowToOahu() {
+  private static void adultRowToOahu() {
     oahuAdults += 1;
     molokaiAdults -= 1;
 
@@ -184,7 +229,7 @@ public class Boat
     bg.AdultRowToOahu();
   }
 
-  private static void ChildrenRowToOahu() {
+  private static void childRowToOahu() {
     oahuChildren += 1;
     molokaiChildren -= 1;
 
@@ -193,7 +238,7 @@ public class Boat
   }
 
   // This may be superfluous
-  private static void ChildrenRideToOahu() {
+  private static void childRideToOahu() {
     oahuChildren += 1;
     molokaiChildren -= 1;
 
