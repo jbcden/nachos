@@ -23,19 +23,25 @@ public class Boat
   static Lock l = new Lock();
   static Lock l2 = new Lock();
 
-  static Condition boatHere = new Condition(l);
+  static Condition boatHereM = new Condition(l);
+  static Condition boatHereO = new Condition(l);
+
   static Condition boatFull = new Condition(l);
   static Condition boatValid = new Condition(l);
 
   static Condition waitForPassenger = new Condition(l);
   static Condition waitForRower = new Condition(l);
+  static Condition clearable = new Condition(l);
 
   static Condition testComplete = new Condition(l);
+  static Condition notComplete = new Condition(l);
 
   /* static Semaphore waitForRower = new Semaphore(0); */
 
   static Semaphore peopleOnBoat = new Semaphore(1);
   static Semaphore bLocation = new Semaphore(1);
+
+  static Semaphore order = new Semaphore(0);
 
   static Semaphore mChildren = new Semaphore(1);
   static Semaphore mAdults = new Semaphore(1);
@@ -82,7 +88,7 @@ public class Boat
     BoatGrader b = new BoatGrader();
 
     // assume >= 2 children
-    int adults = 0;
+    int adults = 1;
     int children = 2;
 
     System.out.println("\n ***Testing Boats with " + children + " children***");
@@ -139,20 +145,27 @@ public class Boat
     l.release();
 
     // allowed?
-    if(!isDone()) {
+    while(!isDone()) {
       l.acquire();
+      notComplete.wake();
       testComplete.sleep();
       l.release();
     }
 
-    finishAllThreads();
+    /* finishAllThreads(); */
   }
 
   private static void finishAllThreads() {
+    System.out.println("FINISH TIME!! :D");
+    System.out.println(threads.size());
     for(int i=0; i<threads.size(); i++) {
       KThread t = threads.get(i);
+      System.out.println(t);
       t.finish();
+      System.out.println("FINISHED A THREAD!!@!@!@!@");
     }
+    System.out.println("EXIT@!!!");
+    System.exit(0);
   }
 
   /* This is where you should put your solutions. Make calls
@@ -175,6 +188,8 @@ public class Boat
   static void ChildItinerary() {
     oahuChildren += 1; // a child has arrived on Oahu
     boolean done = false;
+    boolean waitForRider = false;
+    boolean goBack = true;
 
     Person personType = Person.CHILD;
     Island currentIsland = Island.OAHU;
@@ -182,28 +197,47 @@ public class Boat
     while(true) { // I don't think we can do this :(
       // if the boat isn't here we can't do anything
       // we need to acquire a condition variable for the boat here
-      System.out.println("I AM: "+ KThread.currentThread());
-      System.out.println("Check if the boat is here should return false if it is: " + !isBoatHere(currentIsland));
-      System.out.println("The boat is at: " + boatLocation);
-      System.out.println("I am at: " + currentIsland);
+      /* System.out.println("I AM: "+ KThread.currentThread()); */
+      /* System.out.println("Check if the boat is here should return false if it is: " + !isBoatHere(currentIsland)); */
+      /* System.out.println("The boat is at: " + boatLocation); */
+      /* System.out.println("I am at: " + currentIsland); */
+      /* System.out.println(goBack); */
+      while(!goBack) {
+        KThread.currentThread().yield();
+        /* continue; */
+      }
+
       if(!isBoatHere(currentIsland)) {
-        l.acquire();
-        System.out.println("BOAT SLEEP");
-        boatHere.sleep();
-        l.release();
-        System.out.println("I AM FREE BITCHES!!");
+        if(currentIsland == Island.MOLOKAI) {
+        /* System.out.println("M BOAT SLEEP"); */
+          l.acquire();
+          boatHereM.sleep();
+          l.release();
+        } else {
+          /* System.out.println("BOAT SLEEP"); */
+          l.acquire();
+          boatHereO.sleep();
+          l.release();
+        }
       } else {
-        l.acquire();
-        System.out.println("BOAT WAKE");
-        boatHere.wake();
-        l.release();
+        if(currentIsland == Island.MOLOKAI) {
+          l.acquire();
+          /* System.out.println("M BOAT WAKE"); */
+          boatHereM.wake();
+          l.release();
+        } else {
+          l.acquire();
+          /* System.out.println("BOAT WAKE"); */
+          boatHereO.wake();
+          l.release();
+        }
       }
 
       // we need to acquire a semaphore for the boatPeople here
       // we need to sleep on some condition variable here
       if(!isBoatValid(personType)) {
         l.acquire();
-        System.out.println("I AM NOT A VALID BOAT");
+        /* System.out.println("I AM NOT A VALID BOAT"); */
         boatValid.sleep();
         l.release();
       } else {
@@ -212,13 +246,20 @@ public class Boat
         l.release();
       }
 
+      //System.out.println(boatPeople);
       peopleOnBoat.P();
-      System.out.println("I AM HERE");
-      if(boatPeople.isEmpty()) {
+      boolean isEmpty = boatPeople.isEmpty();
+      peopleOnBoat.V();
 
+      if(isEmpty) {
+        goBack = true;
+
+        peopleOnBoat.P();
         boatPeople.add(personType);
+        peopleOnBoat.V();
+        /* System.out.println("ADDED A OERSON TO BOAT PEEPS"); */
         /* Island tempIsland = rowToOtherIsland(currentIsland, personType); */
-        /* System.out.println(boatPeople); */
+        System.out.println(boatPeople);
 
         /* l.acquire(); */
 
@@ -230,17 +271,21 @@ public class Boat
         // we check for zero b/c we decrease the number in the row method
         if(getNumberOfChildren(currentIsland) > 1 && currentIsland == Island.OAHU) {
           /* System.out.println("FUCK APPLES"); */
+          waitForRider = true;
+          goBack = false;
+
+          order.V();
+
+          /* System.out.println("WAIT FOR PASSENGER"); */
+          l.acquire();
+          waitForPassenger.sleep();
+          l.release();
+          /* System.out.println("A PASSENGER HAS APPEARED!!"); */
 
           l.acquire();
           waitForRower.wake();
           l.release();
-          System.out.println("WOKE THE ROWER");
-
-          System.out.println("WAIT FOR PASSENGER");
-          l.acquire();
-          waitForPassenger.sleep();
-          l.release();
-          System.out.println("A PASSENGER HAS APPEARED!!");
+          /* System.out.println("WOKE THE ROWER"); */
 
           /* waitForRower.V(); */
           /* l.acquire(); */
@@ -248,15 +293,31 @@ public class Boat
           /* #<{(| System.out.println("FUCK  ALL"); |)}># */
           /* l.release(); */
         }
-        currentIsland = rowToOtherIsland(currentIsland, personType);
 
-        if(getTotalNumberOfPeople(currentIsland) == 0) {
+        peopleOnBoat.P();
+        Island previous = currentIsland;
+        currentIsland = rowToOtherIsland(currentIsland, personType);
+        peopleOnBoat.V();
+
+        if(!waitForRider) {
+          bLocation.P();
+          boatLocation = currentIsland;
+          bLocation.V();
+        }
+
+
+        if(previous == Island.OAHU && (getTotalNumberOfPeople(previous) == 0 )){ //|| getTotalNumberOfPeople(previous) == 1) ) {
+          /* System.out.println("TOTAL # OF PEOPLE ON " + previous +": " + getTotalNumberOfPeople(previous)); */
           done = true;
         }
 
         /* currentIsland = tempIsland; */
         /* System.out.println("THIS NEEDS TO HAPPEN BEFORE CONTEXT SWITCHING: " + KThread.currentThread() + " :" + tempIsland); */
       } else if(isBoatValid(personType)) {
+        /* System.out.println("HELP I AM STUCK! IN AN ELSE-IF CASE :O " + KThread.currentThread()); */
+        goBack = true;
+
+        order.P();
 
         /* System.out.println("FUCK MOOSE!!!"); */
         /* l.acquire(); */
@@ -264,52 +325,76 @@ public class Boat
         /* System.out.println("FUCK ROWERS!!!"); */
         /* l.release(); */
 
-        System.out.println("HELP I AM STUCK! IN AN ELSE-IF CASE :O");
-        l.acquire();
-        waitForRower.sleep();
-        l.release();
-        System.out.println("A ROWER HAS APPEARED!!");
-
         l.acquire();
         waitForPassenger.wake();
         l.release();
-        System.out.println("WOKE THE PASSENGER");
+        /* System.out.println("WOKE THE PASSENGER"); */
 
+        l.acquire();
+        waitForRower.sleep();
+        l.release();
+        /* System.out.println("A ROWER HAS APPEARED!!"); */
+
+        peopleOnBoat.P();
         boatPeople.add(personType);
         Island tempIsland = rideToOtherIsland(currentIsland, personType);
+        peopleOnBoat.V();
         /* System.out.println("THIS NEEDS TO HAPPEN BEFORE CONTEXT SWITCHING: " + currentIsland); */
 
         if(getTotalNumberOfPeople(currentIsland) == 0) {
+          /* System.out.println("TOTAL # OF PEOPLE ON " + currentIsland +": " + getTotalNumberOfPeople(currentIsland)); */
           done = true;
         }
 
         currentIsland = tempIsland;
+
+        peopleOnBoat.P();
+        boatPeople.clear();
+        peopleOnBoat.V();
+        /* l.acquire(); */
+        /* clearable.wake(); */
+        /* l.release(); */
 
         /* l.acquire(); */
         /* boatFull.wake(); */
         /* l.release(); */
 
       } else {
-        /* System.out.println("NO GOOD"); */
+        System.out.println("NO GOOD");
         continue;
       }
-      boatPeople.clear();
-      peopleOnBoat.V();
+
+      if(!waitForRider) {
+        peopleOnBoat.P();
+        boatPeople.clear();
+        peopleOnBoat.V();
+        /* l.acquire(); */
+        /* clearable.sleep(); */
+        /* l.release(); */
+      }
+
+      /* System.out.println("CLEARING THE BOAT!!!!!!!!!!!!!"); */
+      /* peopleOnBoat.P(); */
+      /* boatPeople.clear(); */
+      /* peopleOnBoat.V(); */
+      /*  */
+      waitForRider = false;
 
       if(done) {
+      /* System.out.println("WE BE DONE!"); */
         l.acquire();
         testComplete.wake();
         l.release();
+
+        l.acquire();
+        notComplete.sleep();
+        l.release();
       }
+      /* System.out.println("CURRENT THREAD = " +KThread.currentThread()); */
+      /* System.out.println("DONE = " +done); */
+      /* System.out.println("AFTER SLEEP"); */
 
       done = false;
-
-      // is this allowed??
-      /* if(!isDone()) { */
-      /* #<{(|   peopleOnBoat.P(); |)}># */
-      /*   currentIsland = rowToOtherIsland(currentIsland, personType); */
-      /*   peopleOnBoat.V(); */
-      /* } */
     }
   }
 
@@ -395,9 +480,9 @@ public class Boat
     molokaiChildren += 1;
     mChildren.V();
 
-    bLocation.P();
-    boatLocation = Island.MOLOKAI;
-    bLocation.V();
+    /* bLocation.P(); */
+    /* boatLocation = Island.MOLOKAI; */
+    /* bLocation.V(); */
 
     /* System.out.println("CHildren on Oahu " + oahuChildren); */
     /* System.out.println("CHildren on Molokai " + molokaiChildren); */
@@ -416,9 +501,9 @@ public class Boat
     molokaiChildren += 1;
     mChildren.V();
 
-    /* bLocation.P(); */
-    /* boatLocation = Island.MOLOKAI; */
-    /* bLocation.V(); */
+    bLocation.P();
+    boatLocation = Island.MOLOKAI;
+    bLocation.V();
 
     bg.ChildRideToMolokai();
   }
