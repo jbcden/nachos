@@ -88,7 +88,7 @@ public class Boat
     BoatGrader b = new BoatGrader();
 
     // assume >= 2 children
-    int adults = 1;
+    int adults = 0;
     int children = 2;
 
     System.out.println("\n ***Testing Boats with " + children + " children***");

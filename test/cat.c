@@ -15,7 +15,8 @@ int main(int argc, char** argv)
     return 1;
   }
 
-  fd = open(argv[1]);
+  fd = open("/usr/users/quota/students/15/jchae/TESTFILE");
+  /* fd = open(argv[1]); */
   if (fd==-1) {
     printf("Unable to open %s\n", argv[1]);
     return 1;
