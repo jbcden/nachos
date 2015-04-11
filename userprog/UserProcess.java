@@ -410,6 +410,9 @@ public class UserProcess {
     return 0;
   }
 
+  public int handleCreate(String name) {
+  }
+
   /**
    * Handle a user exception. Called by
    * <tt>UserKernel.exceptionHandler()</tt>. The
